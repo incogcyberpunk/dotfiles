@@ -1,9 +1,86 @@
 [general]
+resize = { mode = "size", width=1500, height=800 }
+# try to have the window float (0.20.1). This may depend on the compositor.
+floating-hack = true
+# Draw corners of rectangles round if the value is greater than 0 (0 disables rounded corners)
+corner-roundness = 12
+# Select the tool on startup [possible values: pointer, crop, line, arrow, rectangle, text, marker, blur, brush]
 initial-tool = "brush"
+# Configure the command to be called on copy, for example `wl-copy`
+copy-command = "wl-copy"
+# Increase or decrease the size of the annotations
+annotation-size-factor = 2
 output-filename = "~/Pictures/Screenshots/ss-%Y%m%d_%H%M%S.png"
-copy-command="wl-copy"
+save-after-copy = false
+default-hide-toolbars = false
+focus-toggles-toolbars = false
+default-fill-shapes = false
+primary-highlighter = "block"
+disable-notifications = false
+# Actions to trigger on right click (order is important)
+# [possible values: save-to-clipboard, save-to-file, save-to-file-as, copy-filepath-to-clipboard, exit]
+actions-on-right-click = []
+# Actions to trigger on Enter key (order is important)
+# [possible values: save-to-clipboard, save-to-file, save-to-file-as, copy-filepath-to-clipboard, exit]
+actions-on-enter = ["save-to-clipboard"]
+# Actions to trigger on Escape key (order is important)
+# [possible values: save-to-clipboard, save-to-file, save-to-file-as, copy-filepath-to-clipboard, exit]
+actions-on-escape = ["exit"]
+no-window-decoration = true
+# experimental feature (0.20.1): The zoom factor to use for the image.
+# 1.0 means no zooming.
+zoom-factor = 0.8
+# experimental feature (0.20.1): The length to move the text when using arrow keys. defaults to 50.0
+text-move-length = 50.0 
+# experimental feature (0.20.1): Scale factor on the input image when it was taken (e.g. DPI scale on the monitor it was recorded from).
+# This may be more useful to set via the command line.
+# Note, this is ignored with explicit resize.
+input-scale = 1.0
+
+
+[keybinds]
+pointer = "p"
+crop = "c"
+brush = "b"
+line = "i"
+arrow = "z"
+rectangle = "r"
+ellipse = "e"
+text = "t"
+marker = "m"
+blur = "u"
+highlight = "g"
 
 [font]
 family = "JetBrains Mono Nerd Font Propo"
 style = "Regular"
+fallback = [
+    "Noto Sans CJK JP",
+    "Noto Sans CJK SC",
+    "Noto Sans CJK TC",
+    "Noto Sans CJK KR",
+    "Noto Serif CJK JP",
+    "Noto Serif JP",
+    "IPAGothic",
+    "IPAexGothic",
+    "Source Han Sans"
+]
 
+[color-palette]
+palette = [
+    "#00ffff",
+    "#a52a2a",
+    "#dc143c",
+    "#ff1493",
+    "#ffd700",
+    "#008000",
+]
+
+custom = [
+    "#00ffff",
+    "#a52a2a",
+    "#dc143c",
+    "#ff1493",
+    "#ffd700",
+    "#008000",
+]

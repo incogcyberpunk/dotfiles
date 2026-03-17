@@ -55,8 +55,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.opt.winborder = 'rounded'
-
 -- Sync changes outside of nvim
 vim.opt.autoread = true
 
