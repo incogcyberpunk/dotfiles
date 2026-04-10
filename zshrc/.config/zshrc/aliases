@@ -28,7 +28,7 @@ alias umount='sudo umount'
 alias mall='sudo mount -a'
 
 # Reflector Alias to sort mirrors from Nepal and India and sort them by rate and save them to /etc/pacman.d/mirrorlist
-alias rsort='sudo reflector --sort rate --country Nepal,India --save /etc/pacman.d/mirrorlist'
+alias rsort='sudo reflector --sort rate --protocol https --country Nepal,India --latest 10 --save /etc/pacman.d/mirrorlist'
 
 # Alias for killing hyprland
 alias killhyp='killall Hyprland || pkill Hyprland'
@@ -108,3 +108,13 @@ function bb-quote(){
 
 # Show the wifi password and generate QR code for it
 alias wifiqr="nmcli device wifi show-password"
+
+#Convert hex to rgb
+hex2rgb() {
+  python3 -c "h='${1#\#}'; print(tuple(int(h[i:i+2],16) for i in (0,2,4)))"
+}
+
+#Convert rgb to hex
+rgb2hex() {
+  python3 -c "print('#%02x%02x%02x' % ($1, $2, $3))"
+}

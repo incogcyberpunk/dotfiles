@@ -6,11 +6,6 @@
     "webfetch": "deny",
     "doom_loop": "ask",
     "external_directory": "ask",
-  },
-  "keybinds":{
-        "messages_page_up": "<leader>k,pageup",
-        "messages_page_down": "<leader>j,pagedown",
-        "editor_open":"ctrl+e"
   }
 
 }
