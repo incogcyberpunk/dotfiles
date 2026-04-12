@@ -553,6 +553,14 @@ on = "L"
 run = "forward" 
 desc = "Go forward to the next directory" 
 
+[[mgr.keymap]]
+on = [ "<A-d>","o" ]
+ run = "shell -- dragon-drop -x -a -i -T %h"
+
+[[mgr.keymap]]
+on = [ "<A-d>","a" ]
+ run = "shell -- dragon-drop -x -a -i -T %s"
+
 
 [tasks]
 
@@ -676,7 +684,6 @@ keymap = [
 	{ on = "<C-u>", run = "kill bol",      desc = "Kill backwards to the BOL" },
 	{ on = "<C-k>", run = "kill eol",      desc = "Kill forwards to the EOL" },
 	{ on = "<C-w>", run = "kill backward", desc = "Kill backwards to the start of the current word" },
-	{ on = "<A-d>", run = "kill forward",  desc = "Kill forwards to the end of the current word" },
 
 	# Cut/Yank/Paste
 	{ on = "d", run = "delete --cut",                              desc = "Cut the selected characters" },
