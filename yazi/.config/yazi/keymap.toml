@@ -555,11 +555,14 @@ desc = "Go forward to the next directory"
 
 [[mgr.keymap]]
 on = [ "<A-d>","o" ]
- run = "shell -- dragon-drop -x -a -i -T %h"
+run = "shell -- dragon-drop -x -a -i -T %h"
+desc = "Drag n Drop hovered file"
+
 
 [[mgr.keymap]]
-on = [ "<A-d>","a" ]
- run = "shell -- dragon-drop -x -a -i -T %s"
+on = [ "<A-d>","s" ]
+run = "shell -- dragon-drop -x -a -i -T %s"
+desc = "Drag n Drop selected file(s)"
 
 
 [tasks]
