@@ -1,11 +1,11 @@
 return {
-  "nvim-tree/nvim-tree.lua",
-  version = "*",
-  enabled = true,
-  main = "nvim-tree",
+  'nvim-tree/nvim-tree.lua',
+  version = '*',
+  enabled = false,
+  main = 'nvim-tree',
   lazy = false,
   dependencies = {
-    "nvim-tree/nvim-web-devicons",
+    'nvim-tree/nvim-web-devicons',
   },
   keys = {
     -- NOTE: This `keys` spec allows for lazy loading on ceratin keymaps
@@ -15,12 +15,11 @@ return {
       -- NOTE: This function runs when a buffer (like NvimTree) is attached to a window.
       on_attach = function(bufnumber)
         -- NOTE: Using the `nvim-tree-api` to create custom keybindings
-        local api = require("nvim-tree.api")
+        local api = require 'nvim-tree.api'
 
         local function opts(desc)
-          return { desc = "NvimTree: " .. desc, buffer = bufnumber, silent = true, noremap = true }
+          return { desc = 'NvimTree: ' .. desc, buffer = bufnumber, silent = true, noremap = true }
         end
-        
 
         -- NOTE: Keeping all the default keybindings
         api.config.mappings.default_on_attach(bufnumber)
@@ -28,18 +27,18 @@ return {
         -- Custom keybindings using the `nvim-tree-api` are  added here
         -- NOTE: These are keybindigs for buffer so we use vim.keymap.set
 
-        vim.keymap.set("n", "l", api.node.open.edit, opts("Navigate Inside "))
+        vim.keymap.set('n', 'l', api.node.open.edit, opts 'Navigate Inside ')
 
-        vim.keymap.set("n", "L", api.tree.expand_all, opts("Navigate Inside "))
+        vim.keymap.set('n', 'L', api.tree.expand_all, opts 'Navigate Inside ')
 
-        vim.keymap.set("n", "h", api.node.navigate.parent_close, opts("Close Parent"))
+        vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts 'Close Parent')
 
-        vim.keymap.set("n", "H", api.tree.collapse_all, opts("Collapse All"))
+        vim.keymap.set('n', 'H', api.tree.collapse_all, opts 'Collapse All')
 
-        vim.keymap.set("n", "<C-h>", api.tree.toggle_hidden_filter, opts("Toggle Dotfiles"))
+        vim.keymap.set('n', '<C-h>', api.tree.toggle_hidden_filter, opts 'Toggle Dotfiles')
       end,
 
-      vim.keymap.set({"n"}, "<C-n>", ":NvimTreeToggle<CR>", { desc="Toggle the tree",noremap = true, silent = true}),
+      vim.keymap.set({ 'n' }, '<C-n>', ':NvimTreeToggle<CR>', { desc = 'Toggle the tree', noremap = true, silent = true }),
 
       hijack_cursor = true,
       disable_netrw = true,
@@ -47,7 +46,6 @@ return {
         dotfiles = true,
         git_ignored = false,
       },
-
     }
 
     -- NOTE: Make :q and :bd work as if tree was not visible
@@ -73,12 +71,11 @@ return {
 
         if e.event == 'BufEnter' and winCount == 1 then
           vim.defer_fn(function()
-            tree.toggle({ find_file = true, focus = true })
-            tree.toggle({ find_file = true, focus = false })
+            tree.toggle { find_file = true, focus = true }
+            tree.toggle { find_file = true, focus = false }
           end, 10)
         end
-      end
+      end,
     })
-
-  end
+  end,
 }
