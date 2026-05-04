@@ -1,14 +1,12 @@
 return {
   'nvim-tree/nvim-tree.lua',
-  version = '*',
-  enabled = false,
+  enabled = true,
   main = 'nvim-tree',
-  lazy = false,
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
-  keys = {
-    -- NOTE: This `keys` spec allows for lazy loading on ceratin keymaps
+  keys = { -- Lazy load the plugin when these keys are pressed
+    { '<C-n>', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle the tree', noremap = true, silent = true } },
   },
   config = function()
     require('nvim-tree').setup {
@@ -38,8 +36,6 @@ return {
         vim.keymap.set('n', '<C-h>', api.tree.toggle_hidden_filter, opts 'Toggle Dotfiles')
       end,
 
-      vim.keymap.set({ 'n' }, '<C-n>', ':NvimTreeToggle<CR>', { desc = 'Toggle the tree', noremap = true, silent = true }),
-
       hijack_cursor = true,
       disable_netrw = true,
       filters = {
@@ -47,35 +43,5 @@ return {
         git_ignored = false,
       },
     }
-
-    -- NOTE: Make :q and :bd work as if tree was not visible
-    vim.api.nvim_create_autocmd({ 'BufEnter', 'QuitPre' }, {
-      nested = false,
-      callback = function(e)
-        local tree = require('nvim-tree.api').tree
-
-        if not tree.is_visible() then
-          return
-        end
-
-        local winCount = 0
-        for _, winId in ipairs(vim.api.nvim_list_wins()) do
-          if vim.api.nvim_win_get_config(winId).focusable then
-            winCount = winCount + 1
-          end
-        end
-
-        if e.event == 'QuitPre' and winCount == 2 then
-          vim.api.nvim_cmd({ cmd = 'qall' }, {})
-        end
-
-        if e.event == 'BufEnter' and winCount == 1 then
-          vim.defer_fn(function()
-            tree.toggle { find_file = true, focus = true }
-            tree.toggle { find_file = true, focus = false }
-          end, 10)
-        end
-      end,
-    })
   end,
 }

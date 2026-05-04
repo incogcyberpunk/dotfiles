@@ -1,12 +1,13 @@
 return {
   'MeanderingProgrammer/render-markdown.nvim',
-  dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },   -- if you use the mini.nvim suite
+  -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+  ft = 'markdown',
   opts = {},
   config = function()
-    require('render-markdown').setup({
+    require('render-markdown').setup {
       completions = { lsp = { enabled = true } },
-      render_modes = {'n','v','t'},
-      vim.keymap.set("n","<leader>mt","<cmd>RenderMarkdown toggle<CR>", { desc = "Toggle Render Markdown" }),
-    })
+      render_modes = { 'n', 'v', 't' },
+      vim.keymap.set('n', '<leader>mt', '<cmd>RenderMarkdown toggle<CR>', { desc = 'Toggle Render Markdown' }),
+    }
   end,
 }

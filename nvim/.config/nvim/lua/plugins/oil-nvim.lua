@@ -1,13 +1,20 @@
 return {
   'stevearc/oil.nvim',
   enabled = true,
-  ---@module 'oil'
-  ---@type oil.SetupOpts
   opts = {},
-  dependencies = { { "echasnovski/mini.icons", opts = {} } },
-  lazy = false,
+  dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+  lazy = true,
+  keys = {
+    {
+      '-',
+      function()
+        require('oil').open_float()
+      end,
+      { desc = 'Open oil.nvim from normal mode using keybinds' },
+    },
+  },
   config = function()
-    require("oil").setup({
+    require('oil').setup {
       -- Set to false to disable oil.nvim to open when opening a directory
       default_file_explorer = false,
       -- Skip confirmation for simple edits
@@ -16,45 +23,41 @@ return {
       -- Selecting a new/moved/renamed file or directory will prompt you to save changes first
       prompt_save_on_select_new_entry = true,
       columns = {
-    "icon",
-  },
+        'icon',
+      },
       -- See `:h oil-actions` for a list of all actions
       keymaps = {
-        -- Close the oil buffer 
-        ["q"] = { "actions.close",opts={ exit_if_last_buf=true}, mode = "n" },
+        -- Close the oil buffer
+        ['q'] = { 'actions.close', opts = { exit_if_last_buf = true }, mode = 'n' },
         -- Show help for oil keymaps
-        ["g?"] = { "actions.show_help", mode = "n" },
+        ['g?'] = { 'actions.show_help', mode = 'n' },
         -- Go up a directory
-        ["h"] = { "actions.parent", mode = "n" },
+        ['h'] = { 'actions.parent', mode = 'n' },
         -- Go down into the directory under the cursor
-        ["l"] = "actions.select",
+        ['l'] = 'actions.select',
         -- Open the selected file in a vertical split
-        ["V"] = { "actions.select", opts = { vertical = true } },
+        ['V'] = { 'actions.select', opts = { vertical = true } },
         -- Open the selected file in a horizontal split
-        ["H"] = { "actions.select", opts = { horizontal = true } },
+        ['H'] = { 'actions.select', opts = { horizontal = true } },
         -- Open the selected file in a new tab
-        ["T"] = { "actions.select", opts = { tab = true } },
+        ['T'] = { 'actions.select', opts = { tab = true } },
         -- Preview the selected file
-        ["<C-p>"] = "actions.preview",
+        ['<C-p>'] = 'actions.preview',
         -- Refresh the directory listing
-        ["<C-r>"] = "actions.refresh",
-        ["_"] = { "actions.open_cwd", mode = "n" },
+        ['<C-r>'] = 'actions.refresh',
+        ['_'] = { 'actions.open_cwd', mode = 'n' },
         -- Cd to the current oil directory
-        ["`"] = { "actions.cd", mode = "n" },
-        ["gs"] = { "actions.change_sort", mode = "n" },
+        ['`'] = { 'actions.cd', mode = 'n' },
+        ['gs'] = { 'actions.change_sort', mode = 'n' },
         -- Toggle hidden files
-        ["."] = { "actions.toggle_hidden", mode = "n" },
+        ['.'] = { 'actions.toggle_hidden', mode = 'n' },
         -- Toggle the trash folder
-        ["g\\"] = { "actions.toggle_trash", mode = "n" },
-      }, 
+        ['g\\'] = { 'actions.toggle_trash', mode = 'n' },
+      },
       -- Configuration for the floating keymaps help window
       keymaps_help = {
-        border = "rounded",
+        border = 'rounded',
       },
-    })
-
-    -- Keymap to open oil.nvim in normal mode using '-'
-    vim.keymap.set('n', '-', function() require('oil').open_float() end, { desc = "Open oil.nvim from normal mode using keybinds" })
-
-  end
+    }
+  end,
 }

@@ -1,6 +1,7 @@
 return {
   -- NOTE: For help , lookup `:h dap.txt`
   'mfussenegger/nvim-dap',
+  ft = { 'c', 'cpp', 'javascript', 'typescript' }, -- load this plugin only for these filetypes
   dependencies = {
     'rcarriga/nvim-dap-ui', -- UI for DAP
     'nvim-neotest/nvim-nio', -- A library for asynchronous IO in Neovim, inspired by the asyncio library in Python.
@@ -40,7 +41,7 @@ return {
       executable = {
         command = '/usr/bin/js-debug-dap',
         -- 💀 Make sure to update this path to point to your installation
-        args = {'${port}'},
+        args = { '${port}' },
       },
     }
 
@@ -54,7 +55,7 @@ return {
       },
     }
 
-    dap.configurations.typescript= dap.configurations.javascript
+    dap.configurations.typescript = dap.configurations.javascript
 
     -- NOTE: Configuring how nvim communicates with the debug adapter `cppdbg`;
     dap.adapters['cppdbg'] = {

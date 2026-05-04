@@ -1,6 +1,7 @@
 return {
   'saghen/blink.cmp',
   enabled = true,
+  event = 'InsertEnter',
   dependencies = {
     {
       'folke/lazydev.nvim', -- NOTE: This sets up lua-ls to be avaiable while editing nvim lua config files
