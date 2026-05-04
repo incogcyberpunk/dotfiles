@@ -20,7 +20,7 @@ vim.api.nvim_create_autocmd('BufWrite', {
     end
 
     -- Check if any LSP client other than 'copilot' is attached
-    local clients = vim.lsp.get_clients()
+    local clients = vim.lsp.get_clients { bufnr = 0 }
     local has_lsp = false
 
     for _, client in pairs(clients) do

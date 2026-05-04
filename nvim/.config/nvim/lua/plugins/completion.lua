@@ -1,7 +1,7 @@
 return {
   'saghen/blink.cmp',
   enabled = true,
-  event = 'InsertEnter',
+  event = 'BufRead',
   dependencies = {
     {
       'folke/lazydev.nvim', -- NOTE: This sets up lua-ls to be avaiable while editing nvim lua config files
@@ -14,7 +14,6 @@ return {
     },
     'rafamadriz/friendly-snippets',
   },
-  version = '1.*',
   opts = {
     keymap = {
       preset = 'default',

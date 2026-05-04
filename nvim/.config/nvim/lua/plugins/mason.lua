@@ -12,6 +12,7 @@ return {
   dependencies = {
     'neovim/nvim-lspconfig', -- NOTE: This provides quickstart LSP configs for all LSP servers in the runtimepath ,which can then directly used by using `vim.lsp.enable()`
   },
+  cmd = 'Mason',
   config = function()
     require('mason').setup {}
     -- NOTE: We are trying to use `mason-registry` api along with the `package` API returned by the package object returned when using `mason-registry` for various things
@@ -24,11 +25,10 @@ return {
       'pyright',
       'hyprls',
       'tailwindcss-language-server',
-      'js-debug-adapter', -- JS/TS debugger
-      'cpptools', -- C/C++/Rust debugger
-      'cpplint', -- C/C++ linter
-      'eslint_d', -- JS/TS linter
-      'texlab', -- LaTeX LSP server
+      'js-debug-adapter',     -- JS/TS debugger
+      'cpptools',             -- C/C++/Rust debugger
+      'cpplint',              -- C/C++ linter
+      'texlab',               -- LaTeX LSP server
       'bash-language-server', -- LSP server that provides LSP for PKGBUILD, makepkg.conf
     }
 
