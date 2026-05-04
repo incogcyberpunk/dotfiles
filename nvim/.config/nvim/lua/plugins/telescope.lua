@@ -53,10 +53,11 @@ return {
             ['<C-l>'] = require('telescope.actions').select_default,          -- open file
           },
         },
+        preview = {treesitter = false},
       },
       pickers = {
         find_files = {
-          file_ignore_patterns = { 'node_modules', '^.git', '.venv' ,".bak"},
+          file_ignore_patterns = { 'node_modules', '^.git', '.venv' },
           hidden = true,
         },
         live_grep = {
