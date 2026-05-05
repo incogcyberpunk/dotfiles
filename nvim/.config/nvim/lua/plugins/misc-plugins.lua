@@ -22,8 +22,11 @@ return {
   {
     -- High-performance color highlighter
     'catgoose/nvim-colorizer.lua',
-    config = function()
-      require('colorizer').setup()
-    end,
+    ft = { 'css', 'scss', 'html', 'javascript', 'typescript' ,'markdown'},
+    opts = {
+      parsers = {
+        tailwind = {enable = true, lsp = true},
+      }
+    },
   },
 }
