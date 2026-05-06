@@ -2,25 +2,20 @@
 # ALIASES
 # -----------------------------------------------------
 
-# -----------------------------------------------------
 # General
-# -----------------------------------------------------
 alias ff='fastfetch'
 alias -g ls="eza  --all --icons=always"
 alias -g ll='eza -al --icons=always --group'
 alias -g lt='eza -a --tree --level=1 --icons=always '
 alias cat="bat"
-
 alias vim="nvim"
-# -----------------------------------------------------
+
 # System
-# -----------------------------------------------------
 alias -g update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg' # -g flag to make the alias global i.e. make it available in all shell sessions, including non-interactive shells and scripts
 alias svim="sudo -E nvim"
 alias df="duf"
-# -----------------------------------------------------
+
 # Mount
-# -----------------------------------------------------
 alias mount='sudo mount'
 alias umount='sudo umount'
 
@@ -99,12 +94,7 @@ findpkg(){
 alias spotx="bash <(curl -sSL https://spotx-official.github.io/run.sh) -f"
 
 # Get random rejection reasons
-alias no-reason='curl naas.isalman.dev/no'
-
-# Get random breaking bad quote
-function bb-quote(){
-    curl -s https://api.breakingbadquotes.xyz/v1/quotes | jq -r '.[] | "\"\(.quote)\" -- \(.author)"'
-}
+alias no-reason="curl -s naas.isalman.dev/no | jq '.reason' "
 
 # Show the wifi password and generate QR code for it
 alias wifiqr="nmcli device wifi show-password"
