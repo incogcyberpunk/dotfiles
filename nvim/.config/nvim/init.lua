@@ -2,6 +2,7 @@ require 'config.options'
 require 'config.keymaps'
 require 'config.misc'
 require 'config.autocommands'
+require 'treesitter'
 require 'lspConfig'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'

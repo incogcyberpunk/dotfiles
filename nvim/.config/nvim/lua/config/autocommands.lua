@@ -2,9 +2,9 @@
 local save_group = vim.api.nvim_create_augroup('SaveGroup', { clear = true })
 vim.api.nvim_create_autocmd('BufWrite', {
   pattern = '*',
-  callback = function()
-    local ft = vim.bo.filetype
-    local bt = vim.bo.buftype
+  callback = function(e)
+    local ft = vim.bo[e.buf].filetype
+    local bt = vim.bo[e.buf].buftype
 
     local ignore_filetypes = { 'oil', 'markdown', 'text', 'NvimTree', 'hyprlang' }
 
