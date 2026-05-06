@@ -5,7 +5,7 @@ local filetypes = {'lua','cpp','python','js','javascript','typescript','javascri
 local treesitter_group = vim.api.nvim_create_augroup('TreesitterGroup', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
   group = treesitter_group,
-  pattern = pattern,
+  pattern = filetypes,
   callback = function(e)
       local ok, err = pcall(vim.treesitter.start)
       if ok then

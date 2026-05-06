@@ -2,6 +2,7 @@
 local save_group = vim.api.nvim_create_augroup('SaveGroup', { clear = true })
 vim.api.nvim_create_autocmd('BufWrite', {
   pattern = '*',
+  group = save_group,
   callback = function(e)
     local ft = vim.bo[e.buf].filetype
     local bt = vim.bo[e.buf].buftype
@@ -50,8 +51,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Remove 'r' and 'o' from formatoptions globally
+local format_group = vim.api.nvim_create_augroup('FormatOptions', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
   pattern = '*',
+  group = format_group,
   callback = function()
     vim.opt_local.formatoptions:remove { 'r', 'o' }
   end,

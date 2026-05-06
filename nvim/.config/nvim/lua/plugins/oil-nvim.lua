@@ -6,11 +6,7 @@ return {
   lazy = true,
   keys = {
     {
-      '-',
-      function()
-        require('oil').open_float()
-      end,
-      { desc = 'Open oil.nvim from normal mode using keybinds' },
+      '-', function() require('oil').open_float() end, { desc = 'Open oil.nvim from normal mode using keybinds' },
     },
   },
   config = function()
