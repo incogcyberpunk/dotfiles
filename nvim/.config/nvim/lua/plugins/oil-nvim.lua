@@ -30,17 +30,17 @@ return {
         -- Go up a directory
         ['h'] = { 'actions.parent', mode = 'n' },
         -- Go down into the directory under the cursor
-        ['l'] = 'actions.select',
+        ['l'] = {'actions.select',mode = 'n' },
         -- Open the selected file in a vertical split
-        ['V'] = { 'actions.select', opts = { vertical = true } },
+        ['\\v'] = { 'actions.select', opts = { vertical = true } },
         -- Open the selected file in a horizontal split
-        ['H'] = { 'actions.select', opts = { horizontal = true } },
+        ['\\h'] = { 'actions.select', opts = { horizontal = true } },
         -- Open the selected file in a new tab
         ['T'] = { 'actions.select', opts = { tab = true } },
         -- Preview the selected file
-        ['<C-p>'] = 'actions.preview',
+        ['<C-p>'] = {'actions.preview',mode = 'n' },
         -- Refresh the directory listing
-        ['<C-r>'] = 'actions.refresh',
+        ['<C-r>'] = {'actions.refresh',mode = 'n' },
         ['_'] = { 'actions.open_cwd', mode = 'n' },
         -- Cd to the current oil directory
         ['`'] = { 'actions.cd', mode = 'n' },
