@@ -1,6 +1,4 @@
 {
-  "keyMappings": "# Insert your preferred key mappings here.\n\nunmap d\nunmap u\nunmap r\nunmap t\nunmap p\nmap <c-d> scrollFullPageDown\nmap <c-u> scrollFullPageUp\n\n# Go to previously visited tab\nmap <c-e> visitPreviousTab\n\n# Keybindings for passNextKey\nmap e passNextKey\n\n#Keybinds for searching tabs \nmap t Vomnibar.activateTabSelection\n\nunmap 1\nunmap 2\nunmap 3\nunmap 4\nunmap 5\nunmap 6\nunmap 7\nunmap 8\nunmap 9\nunmap 0\n\nunmap v\nmap { enterInsertMode",
-  "settingsVersion": "2.3.1",
   "exclusionRules": [
     {
       "passKeys": "a s d f g h j k l w r t",
@@ -17,6 +15,21 @@
     {
       "passKeys": "e",
       "pattern": "https://youtube.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://nepsealpha.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://labclient.labondemand.com"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://leetcode.com/*"
     }
-  ]
+  ],
+  "keyMappings": "# Insert your preferred key mappings here.\n\nunmap d\nunmap u\nunmap r\nunmap t\nunmap p\nmap <c-d> scrollFullPageDown\nmap <c-u> scrollFullPageUp\n\n# Keybindings for passNextKey\nmap e passNextKey\n\n#Keybinds for searching tabs \nmap t Vomnibar.activateTabSelection\n\nunmap 1\nunmap 2\nunmap 3\nunmap 4\nunmap 5\nunmap 6\nunmap 7\nunmap 8\nunmap 9\nunmap 0\n\nunmap v\nmap { enterInsertMode",
+  "newTabDestination": "browserNewTabPage",
+  "settingsVersion": "2.4.2"
 }
