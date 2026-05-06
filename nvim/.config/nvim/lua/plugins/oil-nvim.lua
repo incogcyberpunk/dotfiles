@@ -9,8 +9,7 @@ return {
       '-', function() require('oil').open_float() end, { desc = 'Open oil.nvim from normal mode using keybinds' },
     },
   },
-  config = function()
-    require('oil').setup {
+  opts={
       -- Set to false to disable oil.nvim to open when opening a directory
       default_file_explorer = false,
       -- Skip confirmation for simple edits
@@ -54,6 +53,5 @@ return {
       keymaps_help = {
         border = 'rounded',
       },
-    }
-  end,
+  }
 }
