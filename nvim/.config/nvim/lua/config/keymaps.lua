@@ -31,6 +31,12 @@ vim.keymap.set('n', '<leader>h', '<C-w>s', opts) -- split window horizontally
 vim.keymap.set('n', '<leader>se', '<C-w>=', opts) -- make split windows equal width & height
 vim.keymap.set('n', '<leader>cs', ':close<CR>', opts) -- close current split window
 
+-- Tab management
+vim.keymap.set('n','<leader>tn',':tabnext<CR>',opts)
+vim.keymap.set('n','<leader>tp',':tabprev<CR>',opts)
+vim.keymap.set('n','<leader>te',':tabnew<CR>',opts)
+vim.keymap.set('n','<leader>tc',':tabclose<CR>',opts)
+
 -- Navigate between splits
 vim.keymap.set('n', '<C-k>', ':wincmd k<CR>', opts)
 vim.keymap.set('n', '<C-j>', ':wincmd j<CR>', opts)
@@ -57,7 +63,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('n', '<leader>ud', ':e!<CR>', { desc = 'Undo all changes to the file since the last write.' })
 
 -- Keymap to open a terminal
-vim.keymap.set('n', '<leader>te', ':terminal<CR>', { desc = 'Open a new terminal in a tab' })
+vim.keymap.set('n', '<leader>tr', ':terminal<CR>', { desc = 'Open a new terminal in a tab' })
 
 -- Keymap to check if the file has been modified outside of Neovim
 vim.keymap.set('n', '<leader>sy', '<cmd>checktime<CR>', { desc = 'Check if the file has been modified outside of Neovim' })

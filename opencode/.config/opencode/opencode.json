@@ -5,9 +5,7 @@
     "bash": "ask",
     "webfetch": "deny",
     "doom_loop": "ask",
-    "external_directory": "ask",
-  }
-
+    "external_directory": "ask"
+  },
+  "shell": "/usr/bin/zsh"
 }
-
-
