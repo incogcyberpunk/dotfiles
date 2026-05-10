@@ -1,5 +1,10 @@
 return {
   'mason-org/mason.nvim',
+  init = function()
+    -- Add the mason installed binaries to Neovim's internal PATH at lazy.nvim's startup whilst having Mason lazy loaded
+    vim.env.PATH = vim.fn.stdpath('data') .. "mason/bin:" .. vim.env.PATH
+  end,
+  cmd = 'Mason',
   opts = {
     ui = {
       icons = {
@@ -9,12 +14,8 @@ return {
       },
     },
   },
-  dependencies = {
-    'neovim/nvim-lspconfig', -- NOTE: This provides quickstart LSP configs for all LSP servers in the runtimepath ,which can then directly used by using `vim.lsp.enable()`
-  },
-  cmd = 'Mason',
-  config = function()
-    require('mason').setup {}
+  config = function(_, opts)
+    require('mason').setup(opts)
     -- NOTE: We are trying to use `mason-registry` api along with the `package` API returned by the package object returned when using `mason-registry` for various things
     local registry = require 'mason-registry'
 

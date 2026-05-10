@@ -23,7 +23,7 @@ alias umount='sudo umount'
 alias mall='sudo mount -a'
 
 # Reflector Alias to sort mirrors from Nepal and India and sort them by rate and save them to /etc/pacman.d/mirrorlist
-alias rsort='sudo reflector --sort rate --protocol https --country Nepal,India --latest 10 --save /etc/pacman.d/mirrorlist'
+alias rsort='sudo reflector --sort rate --protocol https --country India --latest 10 --save /etc/pacman.d/mirrorlist'
 
 # Alias for killing hyprland
 alias killhyp='killall Hyprland || pkill Hyprland'

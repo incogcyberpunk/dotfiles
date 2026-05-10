@@ -2,3 +2,5 @@
 vim.lsp.enable { 'lua_ls', 'hyprls', 'ts_ls', 'tailwindcss', 'pyright', 'clangd', 'bashls' }
 
 vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, {})
+
+vim.lsp.log.set_level('debug')

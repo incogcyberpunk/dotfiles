@@ -2,6 +2,11 @@ return {
   'nvim-tree/nvim-tree.lua',
   enabled = true,
   main = 'nvim-tree',
+  init = function()
+    -- Disable netrw
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+  end,
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
