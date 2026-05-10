@@ -2,7 +2,7 @@ return {
   'mason-org/mason.nvim',
   init = function()
     -- Add the mason installed binaries to Neovim's internal PATH at lazy.nvim's startup whilst having Mason lazy loaded
-    vim.env.PATH = vim.fn.stdpath('data') .. "mason/bin:" .. vim.env.PATH
+    vim.env.PATH = vim.fn.stdpath('data') .. "/mason/bin:" .. vim.env.PATH
   end,
   cmd = 'Mason',
   opts = {
