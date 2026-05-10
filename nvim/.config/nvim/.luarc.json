@@ -3,6 +3,7 @@
         "vim"
     ],
     "diagnostics.disable": [
-        "unused-function"
+        "unused-function",
+        "duplicate-index"
     ]
 }

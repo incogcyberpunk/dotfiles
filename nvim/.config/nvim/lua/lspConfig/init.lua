@@ -3,4 +3,5 @@ vim.lsp.enable { 'lua_ls', 'hyprls', 'ts_ls', 'tailwindcss', 'pyright', 'clangd'
 
 vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, {})
 
-vim.lsp.log.set_level('debug')
+-- Enable the following line only when you need to debug, as log level DEBUG causes high disk usage and degraded performance
+-- vim.lsp.log.set_level('debug')

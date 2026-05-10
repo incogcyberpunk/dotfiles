@@ -1,6 +1,6 @@
 -- Auto-format on save
 local save_group = vim.api.nvim_create_augroup('SaveGroup', { clear = true })
-vim.api.nvim_create_autocmd('BufWrite', {
+vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*',
   group = save_group,
   callback = function(e)
@@ -37,7 +37,6 @@ vim.api.nvim_create_autocmd('BufWrite', {
 
     vim.lsp.buf.format { async = false }
   end,
-  group = save_group,
 })
 
 -- Highlight on yank
@@ -59,4 +58,3 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.formatoptions:remove { 'r', 'o' }
   end,
 })
-
