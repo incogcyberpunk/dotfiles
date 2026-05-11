@@ -1,9 +1,10 @@
 require 'config.options'
 require 'config.keymaps'
-require 'config.misc'
+require 'config.diagnostics'
 require 'config.autocommands'
 require 'treesitter'
 require 'lspConfig'
+require 'lspConfig.autocompletions'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 -- Checks if the lazy.nvim file exists at the directory given by lazypath
