@@ -55,12 +55,6 @@ vim.keymap.set('v', '>', '>gv', mapOpts)
 -- Keep last yanked when pasting
 vim.keymap.set('v', 'p', '"_dP', mapOpts)
 
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, mergedOpts('Go to previous diagnostic message'))
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, mergedOpts('Go to next diagnostic message'))
-vim.keymap.set('n', '<leader>dg', vim.diagnostic.open_float, mergedOpts('Open floating diagnostic message'))
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, mergedOpts('Open diagnostics list'))
-
 -- Undo all changes to the file and revert to the last write state to the file
 vim.keymap.set('n', '<leader>ud', ':e!<CR>', mergedOpts('Undo all changes to the file since the last write.'))
 
