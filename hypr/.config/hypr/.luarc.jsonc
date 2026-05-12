@@ -1,0 +1,13 @@
+// this `.luarc.jsonc` is desgined to tell lua_ls LSP server to load the hyprland provided native Lua API stubs since migration from hyprlang to Lua in v0.55
+{
+    "workspace":{
+    // "library" tells lua_ls where to load external Lua type definitions (stubs) from.
+    // In this case, it points to Hyprland's shipped Lua API stubs.        
+    "library":[
+            "/usr/share/hypr/stubs"
+        ]
+    },
+    "diagnostics":{
+        "globals":["hl"]
+    }
+}
