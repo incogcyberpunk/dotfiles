@@ -1,5 +1,5 @@
 -- NOTE: use conform.nvim & nvim-lint for formatters and linters that don't have an LSP server
-vim.lsp.enable({ 'lua_ls', 'hyprls', 'ts_ls', 'tailwindcss', 'pyright', 'clangd', 'bashls' })
+vim.lsp.enable({ 'lua_ls', 'ts_ls', 'tailwindcss', 'pyright', 'clangd', 'bashls' })
 
 -- Adding .git as a guaranteed fallback root marker, for all servers
 vim.lsp.config('*', {
@@ -40,9 +40,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Format
         map({ 'n', 'v' }, '<leader>ff', function() vim.lsp.buf.format() end, 'Format Buffer/Selection')
 
-        -- Symbols
-        map('n', 'dO', vim.lsp.buf.workspace_symbol, 'Workspace Symbols')
-
         -- Document highlight: highlight other usages of symbol under cursor
         if client and client:supports_method('textDocument/documentHighlight') then
             local hl_group = vim.api.nvim_create_augroup('lsp_document_highlight_' .. buf, { clear = true })
@@ -66,13 +63,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.api.nvim_create_autocmd({ 'BufWritePost', 'CursorHold' }, {
                 buffer = buf,
                 group = cl_group,
-                callback = vim.lsp.codelens.refresh,
+                callback = function() vim.lsp.codelens.enable(true) end,
             })
         end
 
         -- Document color: show color swatches inline (e.g. in CSS/Tailwind)
         if client and client:supports_method('textDocument/documentColor') then
-            vim.lsp.document_color.enable(true, buf)
+            vim.lsp.document_color.enable(true, { bufnr = buf })
         end
     end,
 })

@@ -24,7 +24,6 @@ return {
       'typescript-language-server',
       'clangd',
       'pyright',
-      'hyprls',
       'tailwindcss-language-server',
       'js-debug-adapter',     -- JS/TS debugger
       'cpptools',             -- C/C++/Rust debugger
