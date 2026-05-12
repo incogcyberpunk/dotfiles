@@ -8,10 +8,10 @@ return {
         enabled = true,
         auto_trigger = true,
         keymap = {
-          accept = '<C-y>', -- key to accept ghost text
-          next = '<C-n>',
-          prev = '<C-p>',
-          dismiss = '<C-e>',
+          accept = '<leader>csa', -- key to accept ghost text
+          next = '<leader>csn',   -- key to get next suggestion
+          prev = '<leader>csp',   -- key to get previous suggestion
+          dismiss = '<leader>csd' -- key to dismiss
         },
       },
     }
