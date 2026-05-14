@@ -25,6 +25,7 @@ require('conf.autostart')
 
 -- Load configuration files
 require('conf.decoration')
+require('conf.variables')
 require('conf.layout')
 require('conf.misc')
 require('conf.windowrule')
