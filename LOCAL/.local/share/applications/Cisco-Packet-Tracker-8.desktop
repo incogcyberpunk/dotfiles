@@ -1,0 +1,7 @@
+[Desktop Entry]
+
+Type=Application
+Name=Cisco Packet Tracker 8.2.2
+Comment=Network simulation software for Cisco devices
+Exec=/opt/pt/packettracer
+Icon=/opt/pt/art/Common/CiscoLogo4.png
