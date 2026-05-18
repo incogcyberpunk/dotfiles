@@ -1,5 +1,5 @@
 local mainMod = "SUPER"
-local scripts = os.getenv("HOME") .. "/.config/hypr/scripts"
+local scripts = "~/.config/hypr/scripts"
 
 hl.bind("SHIFT + ALT + R", hl.dsp.exec_cmd("waypaper --random"))
 hl.bind("SHIFT + ALT + W", hl.dsp.exec_cmd("waypaper --restore"))

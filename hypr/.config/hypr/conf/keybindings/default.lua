@@ -1,5 +1,6 @@
 local mainMod = "SUPER"
-local HYPRSCRIPTS = os.getenv("HOME") .. "/.config/hypr/scripts"
+local HYPRSCRIPTS = "~/.config/hypr/scripts"
+local sysScripts = "~/sysScripts"
 local terminal = "ghostty +new-window"
 local fileManager = "yazi"
 local browser = "zen-browser"
@@ -31,7 +32,7 @@ hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
 -- Actions
 hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(HYPRSCRIPTS .. "/toggleAnimations.sh"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("pkill rofi || rofi -show drun"))
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("pkill rofi || rofi -show run"))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(sysScripts .. "/interactiveCd.sh"))
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(HYPRSCRIPTS .. "/reloadWaybar.sh"))
 hl.bind(mainMod .. " + CTRL + B", hl.dsp.exec_cmd(HYPRSCRIPTS .. "/toggleWaybar.sh"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload && notify-send 'Reloaded Hyprland Config'"))

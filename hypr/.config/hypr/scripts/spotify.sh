@@ -1,4 +1,4 @@
-!#/usr/bin/env bash
+#!/usr/bin/env bash
 
 # supress output by `> /dev/null` which redirects the std. o/p to /dev/null
 
@@ -7,12 +7,12 @@ if (pgrep spotify > /dev/null) ; then
     # syntax of if => if (command's exit status)
     #
     if (hyprctl activewindow | grep -v grep | grep -iw spotify > /dev/null) ; then
-        hyprctl dispatch killactive
+        hyprctl dispatch 'hl.dsp.close()'
     else
         spotify
     fi
 else
-    hyprctl dispatch exec spotify
+    hyprctl dispatch 'hl.dsp.exec_cmd("spotify")'
     sleep 1.5
     hyprctl dispatch  movetoworkspacesilent 4
 fi

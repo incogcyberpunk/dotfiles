@@ -3,4 +3,4 @@ if pgrep -x hyprlock ; then
     pkill -x hyprlock
 fi
 
-hyprctl dispatch exec hyprlock && sleep 1 && hyprctl dispatch dpms off 
+hyprctl dispatch "hl.dsp.exec_cmd('hyprlock')" && sleep 1 && hyprctl dispatch "hl.dsp.dpms()"

@@ -8,9 +8,9 @@
 {
   // Workspaces
   "hyprland/workspaces": {
-    "on-scroll-up": "hyprctl dispatch workspace r-1",
-    "on-scroll-down": "hyprctl dispatch workspace r+1",
-    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({workspace=\"r+1\"})' ",
+    "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({workspace=\"r-1\"})' ",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({workspace=\"{id}\"})'",
     "active-only": false,
     "all-outputs": false,
     "format": "{}",
@@ -57,21 +57,6 @@
   "custom/tools": {
     "format": "",
     "tooltip-format": "Tools"
-  },
-  // Make waybar module for wallpaper
-  // Wallpaper
-  "custom/wallpaper": {
-    "format": "",
-    "on-click": "bash -c waypaper &",
-    "on-click-right": "~/.config/hypr/scripts/wallpaper-effects.sh",
-    "tooltip-format": "Left: Select a wallpaper\nRight: Select wallpaper effect"
-  },
-
-  // Keybindings (Needs to be setup)
-  "custom/keybindings": {
-    "format": "",
-    "on-click": "~/.config/hypr/scripts/keybindings.sh",
-    "tooltip": false
   },
   // ArchIcon
   "custom/archicon": {
@@ -159,20 +144,6 @@
       "tray",
       "custom/exit"
     ]
-  },
-  // Network
-  "network": {
-    "format": "{ifname}",
-    "format-wifi": " ",
-    "format-ethernet": "  {ifname}",
-    "format-disconnected": "Disconnected ⚠",
-    "tooltip-format": " {ifname} via {gwaddri}",
-    "tooltip-format-wifi": "  {essid}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
-    "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
-    "tooltip-format-disconnected": "Disconnected",
-    "max-length": 50,
-    "on-click": "kitty --title 'Network-Manager' -e nmtui ",
-    "on-click-right": "",
   },
   // Battery
   "battery": {
