@@ -1,8 +1,8 @@
 local mainMod = "SUPER"
 local scripts = "~/.config/hypr/scripts"
 
-hl.bind("SHIFT + ALT + R", hl.dsp.exec_cmd("waypaper --random"))
-hl.bind("SHIFT + ALT + W", hl.dsp.exec_cmd("waypaper --restore"))
+hl.bind("CTRL + ALT + R", hl.dsp.exec_cmd("waypaper --random"))
+hl.bind("CTRL + ALT + W", hl.dsp.exec_cmd("waypaper --restore"))
 
 hl.bind("SUPER + ALT + CTRL + L", hl.dsp.exec_cmd(scripts .. "/laptopDisplayEnable.sh"))
 hl.bind("SUPER + ALT + CTRL + M", hl.dsp.exec_cmd(scripts .. "/monitorDisplayEnable.sh"))
