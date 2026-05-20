@@ -1,3 +1,4 @@
+
 hl.monitor({
     output = "eDP-1",
     mode = "1920x1080",
@@ -12,3 +13,5 @@ hl.monitor({
 })
 -- Rule for quickly plugging in random monitors
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
+
+
