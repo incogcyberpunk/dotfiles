@@ -9,6 +9,6 @@ hl.config({
         workspace_center_on = 1,
     },
     xwayland = {
-        enabled = false,
+        enabled = true,
     }
 })

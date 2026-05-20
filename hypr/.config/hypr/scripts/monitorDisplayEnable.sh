@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 
-echo -e 'monitor=HDMI-A-1,1366x768,0x0,1\nmonitor = eDP-1,disable' > ~/.config/hypr/monitors.conf
-
+config="
+hl.monitor({
+    output = \"HDMI-A-1\",
+    mode = \"preferred\",
+    position = \"0x0\",
+    scale = '1',
+})
+hl.monitor({
+    output = \"eDP-1\",
+    disabled = true
+})
+"
+if  echo -e "$config" > ~/.config/hypr/monitors.lua ; then
+    notify-send "Enabled the monitor display"
+else
+    notify-send "Error enabling the monitor display !!"
+fi
 waypaper --restore
 
