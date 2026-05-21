@@ -1,6 +1,6 @@
 -- Filetypes(associated with diff. lang.) for which to enable Treesitter highlighting and folding
 local filetypes = { 'lua', 'cpp', 'python', 'js', 'javascript', 'typescript', 'javascriptreact', 'tsx', 'html', 'css',
-  'rust', 'go', 'sh', 'markdown', 'yaml', 'toml' }
+  'rust', 'go', 'sh', 'markdown', 'yaml', 'toml', 'just', 'tera' }
 
 -- Autocommand to start Treesitter highlighting and folding for specific filetypes using vim.treesitter APIs
 local treesitter_group = vim.api.nvim_create_augroup('TreesitterGroup', { clear = true })
