@@ -1,8 +1,0 @@
-{
-  "name": "custom-snippets",
-  "contributes": {
-    "snippets": [
-      {"language":["javascript","typescript","javascriptreact","typescriptreact"], "path":"./js-ts.json"}
-    ]
-  }
-}

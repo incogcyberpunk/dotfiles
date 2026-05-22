@@ -3,6 +3,7 @@ return {
   -- optional: provides snippets for the snippet source
   dependencies = {
     'rafamadriz/friendly-snippets',
+    'L3MON4D3/LuaSnip'
   },
   version = '1.*',
   opts = {
@@ -18,6 +19,10 @@ return {
     completion = {
       documentation = { auto_show = false },
       ghost_text = { enabled = true }
+    },
+
+    snippets = {
+      preset = 'luasnip',
     },
 
     sources = {
