@@ -8,17 +8,11 @@
 {
   // Workspaces
   "hyprland/workspaces": {
-    "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({workspace=\"r+1\"})' ",
-    "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({workspace=\"r-1\"})' ",
-    "on-click": "hyprctl dispatch 'hl.dsp.focus({workspace=\"{id}\"})'",
+    "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({workspace=\"m+1\"})' ",
+    "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({workspace=\"m-1\"})' ",
     "active-only": false,
     "all-outputs": false,
-    "format": "{}",
-    "format-icons": {
-      "urgent": "",
-      "active": "",
-      "default": ""
-    },
+    "format": "{id}",
     "persistent-workspaces": {
       "*": 0
     }

@@ -1,5 +1,5 @@
 -- NOTE: use conform.nvim & nvim-lint for formatters and linters that don't have an LSP server
-vim.lsp.enable({ 'lua_ls', 'ts_ls', 'tailwindcss', 'pyright', 'clangd', 'bashls' })
+vim.lsp.enable({ 'lua_ls', 'ts_ls', 'tailwindcss', 'pyright', 'clangd', 'bashls', 'copilot' })
 
 -- Adding .git as a guaranteed fallback root marker, for all servers
 vim.lsp.config('*', {
