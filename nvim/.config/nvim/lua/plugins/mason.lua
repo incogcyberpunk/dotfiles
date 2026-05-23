@@ -30,7 +30,7 @@ return {
       'cpplint',              -- C/C++ linter
       'texlab',               -- LaTeX LSP server
       'bash-language-server', -- LSP server that provides LSP for PKGBUILD, makepkg.conf
-      'copilot-language-server',
+      'stylua'
     }
 
     -- NOTE: Below this line, we define helper functions to install the tools if not already installed

@@ -17,5 +17,4 @@ hl.bind(mainMod .. " + D", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t"))
 
 hl.bind("ALT + H", hl.dsp.exec_cmd(scripts .. "/hypridle.sh toggle"))
-hl.bind("ALT + E", hl.dsp.exec_cmd("nemo"))
-hl.bind("SUPER + I", hl.dsp.exec_cmd("rofimoji"))
+hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("rofimoji"))

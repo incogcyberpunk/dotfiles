@@ -9,7 +9,7 @@ ghostty -e zsh -c '
 
 # Create a session for all the different configs 
 tmux new -d -s Configs -n NvimConfigs -c "$HOME/.config/nvim/" "nvim $HOME/.config/nvim/init.lua"  \; \
-    neww -n HyprConfigs -c "$HOME/.config/hypr/" "nvim $HOME/.config/hypr/hyprland.conf" \;  \
+    neww -n HyprConfigs -c "$HOME/.config/hypr/" "nvim $HOME/.config/hypr/hyprland.lua" \;  \
     neww -n TmuxConfigs -c "$HOME/.config/tmux/" "nvim $HOME/.config/tmux/tmux.conf" \; \
     neww -n GhosttyConfigs -c "$HOME/.config/ghostty/" "nvim $HOME/.config/ghostty/config";
 

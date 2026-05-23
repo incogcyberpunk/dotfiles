@@ -2,20 +2,6 @@ return {
   'zbirenbaum/copilot.lua',
   cmd = 'Copilot',
   event = 'InsertEnter',
-  config = function()
-    require('copilot').setup {
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        keymap = {
-          accept = '<leader>csa', -- key to accept ghost text
-          next = '<leader>csn',   -- key to get next suggestion
-          prev = '<leader>csp',   -- key to get previous suggestion
-          dismiss = '<leader>csd' -- key to dismiss
-        },
-      },
-    }
-  end,
   keys = {
     {
       '<leader>ce',
@@ -42,4 +28,31 @@ return {
       desc = 'Disable Copilot',
     },
   },
+  config = function()
+    require('copilot').setup ({
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        keymap = {
+          accept = '<C-.>', -- key to accept ghost text
+          next = '<M-]>',   -- key to get next suggestion (DEFAULT)
+          prev = '<M-[>',   -- key to get previous suggestion (DEFAULT)
+          dismiss = '<C-,>' -- key to dismiss
+        },
+      },
+    })
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "BlinkCmpMenuOpen",
+    callback = function()
+      vim.b.copilot_suggestion_hidden = true
+    end,
+  })
+
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "BlinkCmpMenuClose",
+    callback = function()
+      vim.b.copilot_suggestion_hidden = false
+    end,
+  })
+  end,
 }

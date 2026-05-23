@@ -2,10 +2,10 @@
 font-family = "JetBrainsMono NF"
 # 700 weight corresponds to Bold
 font-style = "SemiBold"
-font-size = 14
+font-size = 13
 # Fallback font
 font-family = "Noto Sans Devanagari"
-font-size = 14
+font-size = 13
 
 # --- Visuals ---
 theme = Catppuccin Mocha
@@ -14,6 +14,7 @@ background-opacity = 0.9
 # --- Keybindings ---
 keybind = alt+enter=unbind
 keybind = ctrl+enter=unbind
+keybind = ctrl+,=unbind
 
 confirm-close-surface = false
 quit-after-last-window-closed = true
