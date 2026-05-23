@@ -2,14 +2,14 @@
 font-family = "JetBrainsMono NF"
 # 700 weight corresponds to Bold
 font-style = "SemiBold"
+font-size = 14
 # Fallback font
-font-family = "Lohit Nepali"
-font-size = 12
+font-family = "Noto Sans Devanagari"
+font-size = 14
 
 # --- Visuals ---
 theme = Catppuccin Mocha
-
-window-padding-y = 6,10
+background-opacity = 0.9
 
 # --- Keybindings ---
 keybind = alt+enter=unbind
