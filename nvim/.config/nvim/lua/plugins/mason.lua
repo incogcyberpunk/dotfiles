@@ -30,6 +30,7 @@ return {
       'stylua',
       'json-lsp',
       'css-lsp',
+      'yaml-language-server',
 
       -- Linters
       'luacheck', -- Lua linter
@@ -42,6 +43,7 @@ return {
       'yamllint', -- YAML linter
       'tombi', -- TOML linter
       'markdownlint', -- Markdown linter
+      'hadolint', -- Dockerfile linter
     }
 
     -- NOTE: We are trying to use `mason-registry` api along with the `package` API returned by the package object returned when using `mason-registry` for various things

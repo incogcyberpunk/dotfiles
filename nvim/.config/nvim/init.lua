@@ -5,7 +5,6 @@ require 'config.autocommands'
 require 'treesitter'
 require 'lspConfig'
 require 'lspConfig.autocompletions'
-require 'linters'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 -- Checks if the lazy.nvim file exists at the directory given by lazypath
