@@ -1,7 +1,19 @@
-hl.bind("SUPER + X", hl.dsp.exec_cmd("notify-send -u critical -h string:x-canonical-private-synchronous:keybinds-disable 'Hyprland Keybinds Disabled !!'"))
-hl.bind("SUPER + X", hl.dsp.submap("disableKeybinds"))
+hl.bind("SUPER + x", function()
+	hl.dispatch(
+		hl.dsp.exec_cmd(
+			"notify-send -u critical -h string:x-canonical-private-synchronous:keybinds-disable 'Hyprland Keybinds Disabled !!'"
+		)
+	)
+	hl.dispatch(hl.dsp.submap("disableKeybinds"))
+end)
 
-hl.define_submap("disableKeybinds", "reset", function()
-    hl.bind("SUPER + X", hl.dsp.exec_cmd("notify-send -t 1200 -h string:x-canonical-private-synchronous:keybinds-disable 'Hyprland Keybinds Enabled !!'"))
-    hl.bind("SUPER + X", hl.dsp.submap("reset"))
+hl.define_submap("disableKeybinds", function()
+	hl.bind("SUPER + e", function()
+		hl.dispatch(hl.dsp.submap("reset"))
+		hl.dispatch(
+			hl.dsp.exec_cmd(
+				"notify-send -h string:x-canonical-private-synchronous:keybinds-disable 'Hyprland Keybinds Enabled !!'"
+			)
+		)
+	end)
 end)
