@@ -47,3 +47,9 @@ setopt interactivecomments
 setopt autocd
 setopt CORRECT
 setopt extendedglob
+
+# Setup edit command in preferred text editor
+autoload edit-command-line
+zle -N edit-command-line
+
+bindkey '^E' edit-command-line
