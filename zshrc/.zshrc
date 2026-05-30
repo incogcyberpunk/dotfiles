@@ -19,7 +19,7 @@ setopt SHARE_HISTORY
 # SETUP ZOXIDE (-- the better cd --)
 # Environment variables that sets up the database for zoxide
 # Initialize zoxide 
- eval "$(zoxide init --cmd cd zsh)" // --cmd cd is used to make the command `cd` work with zoxide
+eval "$(zoxide init --cmd cd zsh)" // --cmd cd is used to make the command `cd` work with zoxide
 
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)

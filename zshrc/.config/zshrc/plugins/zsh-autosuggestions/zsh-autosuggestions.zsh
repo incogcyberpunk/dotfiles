@@ -842,5 +842,5 @@ add-zsh-hook precmd _zsh_autosuggest_start
 
 # Keybindings 
 bindkey '^y' autosuggest-accept
-bindkey '^e' autosuggest-execute
+bindkey '^ ' autosuggest-execute
 bindkey '^d' autosuggest-clear

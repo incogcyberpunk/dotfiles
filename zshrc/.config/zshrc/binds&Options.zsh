@@ -16,8 +16,6 @@ bindkey -r "^D"
 
 
 # CHANGING THE CURSOR BASED ON THE VI MODE
-# Enable vi mode
-bindkey -v
 
 export KEYTIMEOUT=1
 
