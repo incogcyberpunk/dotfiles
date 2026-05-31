@@ -1,5 +1,6 @@
 return {
-  'stevearc/oil.nvim',
+  'incogcyberpunk/oil.nvim',
+  branch = 'master',
   enabled = true,
   dependencies = { { 'echasnovski/mini.icons', opts = {} } },
   lazy = true,

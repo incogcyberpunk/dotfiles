@@ -22,11 +22,11 @@ return {
   {
     -- High-performance color highlighter
     'catgoose/nvim-colorizer.lua',
-    ft = { 'css', 'scss', 'html', 'javascript', 'typescript' ,'markdown'},
+    ft = { 'css', 'scss', 'html', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'markdown' },
     opts = {
       parsers = {
-        tailwind = {enable = true, lsp = true},
-      }
+        tailwind = { enable = true, lsp = true },
+      },
     },
   },
 }
