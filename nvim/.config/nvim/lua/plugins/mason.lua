@@ -31,7 +31,6 @@ return {
       'json-lsp',
       'css-lsp',
       'yaml-language-server',
-      'perlnavigator',
 
       -- Linters
       'luacheck', -- Lua linter
