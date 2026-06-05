@@ -31,6 +31,7 @@ return {
       'json-lsp',
       'css-lsp',
       'yaml-language-server',
+      'docker-language-server',
 
       -- Linters
       'luacheck', -- Lua linter
