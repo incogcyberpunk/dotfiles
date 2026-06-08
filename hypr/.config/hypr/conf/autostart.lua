@@ -3,7 +3,7 @@
 
 -- Using `hl.on` to define an event listener for the event `hyprland.start`
 hl.on("hyprland.start", function()
-	-- Using waypaper(wallpaper setter) and awww(wayland wallpaper daemon)
+	-- Using awww(wayland wallpaper daemon)
 	hl.exec_cmd("awww-daemon")
 
 	-- Startup waybar on startup
@@ -23,11 +23,11 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 
-	-- Launch discord silently on workspace 15
+	-- Launch discord on workspace 15
 	hl.exec_cmd("discord", { workspace = 15 })
 
 	-- Execute the tmux script
-	hl.exec_cmd("~/.config/hypr/scripts/tmuxSetup", { workspace = 3 })
+	hl.exec_cmd("~/.config/hypr/scripts/tmuxSetup")
 
 	-- Load the nepali date
 	hl.exec_cmd("~/sysScripts/fetchNepaliDate.sh")
