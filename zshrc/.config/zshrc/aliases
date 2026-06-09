@@ -41,14 +41,6 @@ alias ytdlpmusic="yt-dlp --extract-audio --audio-format mp3 --audio-quality 0"
 # -----------------------------------------------------
 # Fzf 
 # -----------------------------------------------------
-# alias spkg="pacman -Qq | fzf  | xargs -r pacman -Qi" # Search installed pkg using fzf
-function spkg(){
-    if [[ -z $1 ]]; then
-        pacman -Qq | fzf  | xargs -r pacman -Qi
-    else
-        pacman -Qi $1
-    fi
-}
 
 # NOTE: -r flag in xargs to exit if std. input is empty , -o flag to reopen stdin as /dev/tty in child processes before executing the command , which is useful for running interactive applications
 alias rpkg='pacman -Qq | fzf -m | xargs -or sudo pacman -R' 
@@ -60,13 +52,6 @@ sfile(){
 }
 
 alias rfile='fzf -m | xargs -or rm -Iv'
-function rdir(){
-    if [[ -z $1 ]]; then
-        fd -d 1 -t d | fzf -m | xargs -or -I {} rm -rIv {}
-    else
-        rm -rfIv $1
-    fi
-}
 
 # Zoxide Aliases
 alias cde="zoxide edit"
@@ -80,16 +65,6 @@ alias acpu='auto-cpufreq'
 # Get nepali date
 alias nepdate='~/sysScripts/fetchNepaliDate.sh'
 
-# Search who provides the command in Arch Linux 
-pkgwho(){
-    pacman -Qo $(which $1)
-}
-
-# Find which package provides a file
-findpkg(){
-    pacman -F $1
-}
-
 # Run the spotx-bash script
 alias spotx="bash <(curl -sSL https://spotx-official.github.io/run.sh) -f"
 
@@ -99,12 +74,3 @@ alias no-reason="curl -s naas.isalman.dev/no | jq '.reason' "
 # Show the wifi password and generate QR code for it
 alias wifiqr="nmcli device wifi show-password"
 
-#Convert hex to rgb
-hex2rgb() {
-  python3 -c "h='${1#\#}'; print(tuple(int(h[i:i+2],16) for i in (0,2,4)))"
-}
-
-#Convert rgb to hex
-rgb2hex() {
-  python3 -c "print('#%02x%02x%02x' % ($1, $2, $3))"
-}
