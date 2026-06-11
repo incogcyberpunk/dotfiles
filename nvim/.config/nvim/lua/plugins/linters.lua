@@ -18,6 +18,7 @@ return {
       toml = { 'tombi' },
       markdown = { 'markdownlint' },
       dockerfile = { 'hadolint' },
+      go = { 'golangcilint' },
     }
 
     -- NOTE: Run linters on save
