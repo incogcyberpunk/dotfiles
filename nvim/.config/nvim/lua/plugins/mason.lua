@@ -32,6 +32,7 @@ return {
       'css-lsp',
       'yaml-language-server',
       'docker-language-server',
+      'gopls',
 
       -- Linters
       'luacheck', -- Lua linter
@@ -45,6 +46,7 @@ return {
       'tombi', -- TOML linter
       'markdownlint', -- Markdown linter
       'hadolint', -- Dockerfile linter
+      'golangci-lint', -- Go linter
     }
 
     -- NOTE: We are trying to use `mason-registry` api along with the `package` API returned by the package object returned when using `mason-registry` for various things
