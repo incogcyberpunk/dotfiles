@@ -3,10 +3,10 @@ local scripts = "~/.config/hypr/scripts"
 hl.define_submap("audioSubmap", function()
 	hl.bind("T", hl.dsp.exec_cmd("~/sysScripts/toggleAppSound.sh"))
 
-	hl.bind("H", hl.dsp.exec_cmd("playerctl -p spotify previous"), { repeating = true })
+	hl.bind("H", hl.dsp.exec_cmd("playerctl -p spotify previous"), { repeating = true, locked = true })
 	hl.bind("J", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh decrease"), { repeating = true })
 	hl.bind("K", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh increase"), { repeating = true })
-	hl.bind("L", hl.dsp.exec_cmd("playerctl -p spotify next"), { repeating = true })
+	hl.bind("L", hl.dsp.exec_cmd("playerctl -p spotify next"), { repeating = true, locked = true })
 
 	hl.bind("LEFT", hl.dsp.exec_cmd("playerctl -p spotify previous"), { repeating = true })
 	hl.bind("DOWN", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh decrease"), { repeating = true })
