@@ -13,6 +13,7 @@ vim.lsp.enable {
   'yamlls',
   'prolog',
   'docker_language_server',
+  'gopls',
 }
 
 -- Adding .git as a guaranteed fallback root marker, for all servers
