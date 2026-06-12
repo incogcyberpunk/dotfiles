@@ -58,6 +58,7 @@ hl.bind("ALT + S", hl.dsp.exec_cmd(HYPRSCRIPTS .. "/suspend.sh"), { locked = tru
 -- Wlogout
 hl.bind("ALT + M", hl.dsp.exec_cmd("wlogout -s"))
 
+-- Universal Submap Reset
 hl.bind(mainMod .. " + ALT + R", function()
 	hl.dispatch(hl.dsp.exec_cmd("swaync-client -C")) -- Close all notifications
 	hl.dispatch(
