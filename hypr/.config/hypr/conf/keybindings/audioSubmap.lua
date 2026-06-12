@@ -34,14 +34,14 @@ hl.define_submap("audioSubmap", function()
 		)
 		hl.dispatch(hl.dsp.submap("reset"))
 	end, { locked = true })
-	 hl.bind("catchall", function()
-	 	hl.dispatch(
-	 		hl.dsp.exec_cmd(
-	 			"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Audio Submap' "
-	 		)
-	 	)
-	 	hl.dispatch(hl.dsp.submap("reset"))
-	 end, { locked = true })
+	-- hl.bind("catchall", function()
+	-- 	hl.dispatch(
+	-- 		hl.dsp.exec_cmd(
+	-- 			"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Audio Submap' "
+	-- 		)
+	-- 	)
+	-- 	hl.dispatch(hl.dsp.submap("reset"))
+	-- end, { locked = true })
 end)
 
 hl.bind(
