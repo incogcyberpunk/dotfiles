@@ -16,32 +16,32 @@ hl.define_submap("audioSubmap", function()
 	hl.bind("M", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh toggle-sink"), { locked = true })
 	hl.bind("SPACE", hl.dsp.exec_cmd("playerctl -p spotify play-pause"), { locked = true })
 
-	hl.bind("P", hl.dsp.exec_cmd(scripts .. "/spotify.sh", { workspace = "4 silent" }))
+	hl.bind("P", hl.dsp.exec_cmd(scripts .. "/spotify.sh", { workspace = "4" }))
 
-	hl.bind(
-		"Q",
-		hl.dsp.exec_cmd(
-			"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Audio Submap'"
-		),
-		{ locked = true }
-	)
-	hl.bind("Q", hl.dsp.submap("reset"), { locked = true })
-	hl.bind(
-		"ESCAPE",
-		hl.dsp.exec_cmd(
-			"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Audio Submap'"
-		),
-		{ locked = true }
-	)
-	hl.bind("ESCAPE", hl.dsp.submap("reset"), { locked = true })
-	hl.bind(
-		"catchall",
-		hl.dsp.exec_cmd(
-			"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Audio Submap' && hyprctl dispatch submap reset"
-		),
-		{ locked = true }
-	)
-	hl.bind("catchall", hl.dsp.submap("reset"), { locked = true })
+	hl.bind("Q", function()
+		hl.dispatch(
+			hl.dsp.exec_cmd(
+				"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Audio Submap' "
+			)
+		)
+		hl.dispatch(hl.dsp.submap("reset"))
+	end, { locked = true })
+	hl.bind("ESCAPE", function()
+		hl.dispatch(
+			hl.dsp.exec_cmd(
+				"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Audio Submap' "
+			)
+		)
+		hl.dispatch(hl.dsp.submap("reset"))
+	end, { locked = true })
+	-- hl.bind("catchall", function()
+	-- 	hl.dispatch(
+	-- 		hl.dsp.exec_cmd(
+	-- 			"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Audio Submap' "
+	-- 		)
+	-- 	)
+	-- 	hl.dispatch(hl.dsp.submap("reset"))
+	-- end, { locked = true })
 end)
 
 hl.bind(
