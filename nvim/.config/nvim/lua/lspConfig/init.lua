@@ -50,7 +50,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Info
     map('n', 'K', vim.lsp.buf.hover, 'Hover Docs')
-    map({ 'n', 'i' }, '<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
+    map({ 'n', 'i' }, '<C-s>', vim.lsp.buf.signature_help, 'Signature Help')
 
     -- Format
     map({ 'n', 'v' }, '<leader>ff', function()
