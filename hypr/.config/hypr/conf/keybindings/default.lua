@@ -3,7 +3,7 @@ local HYPRSCRIPTS = "~/.config/hypr/scripts"
 local sysScripts = "~/sysScripts"
 local terminal = "ghostty +new-window"
 local fileManager = "yazi"
-local browser = "zen-browser"
+local browser = "zen-browser-twilight"
 
 -- KILL Hyprland
 hl.bind("CTRL + ALT + DELETE", hl.dsp.exit(), { locked = true })
