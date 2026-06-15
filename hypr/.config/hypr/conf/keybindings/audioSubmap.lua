@@ -14,6 +14,7 @@ hl.define_submap("audioSubmap", function()
 	hl.bind("RIGHT", hl.dsp.exec_cmd("playerctl -p spotify next"), { repeating = true })
 
 	hl.bind("A", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh toggle-sink"), { locked = true })
+	hl.bind("M", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh toggle-source"), { locked = true })
 	hl.bind("SPACE", hl.dsp.exec_cmd("playerctl -p spotify play-pause"), { locked = true })
 
 	hl.bind("P", hl.dsp.exec_cmd(scripts .. "/spotify.sh", { workspace = "4" }))
