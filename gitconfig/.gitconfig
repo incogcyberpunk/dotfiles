@@ -20,3 +20,5 @@
 	helper = !/usr/bin/gh auth git-credential
 [merge]
 	tool = nvimdiff
+[pager]
+	diff = diffnav
