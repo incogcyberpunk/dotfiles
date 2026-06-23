@@ -1,0 +1,6 @@
+[Unit]
+Description=Hyprland Session
+BindsTo=graphical-session.target
+PropagatesStopTo=graphical-session.target
+Wants=graphical-session-pre.target
+After=graphical-session-pre.target
