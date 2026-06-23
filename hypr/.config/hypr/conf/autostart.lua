@@ -42,3 +42,7 @@ hl.on("workspace.move_to_monitor", function(ws, m)
 		icon = "ok",
 	})
 end)
+
+hl.on("hyprland.shutdown", function()
+	os.execute("systemctl --user stop hyprland-session.target")
+end)
