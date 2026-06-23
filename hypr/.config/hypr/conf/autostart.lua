@@ -3,6 +3,8 @@
 
 -- Using `hl.on` to define an event listener for the event `hyprland.start`
 hl.on("hyprland.start", function()
+	hl.exec_cmd("systemctl --user start hyprland-session.target")
+
 	-- Using awww(wayland wallpaper daemon)
 	hl.exec_cmd("awww-daemon")
 
