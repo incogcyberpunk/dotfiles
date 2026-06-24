@@ -25,9 +25,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 
-	-- Launch discord on workspace 15
-	hl.exec_cmd("discord", { workspace = 15 })
-
 	-- Execute the tmux script
 	hl.exec_cmd("~/.config/hypr/scripts/tmuxSetup")
 
