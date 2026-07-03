@@ -101,22 +101,22 @@
   },
   // Clock
   "clock": {
-    "format": "{:%H:%M %a %b-%d}",
+    "format": "{:%H:%M %a %b %d}",
     "tooltip-format": "{calendar}",
-    "on-click":"~/sysScripts/fetchNepaliDate.sh",
+    "on-click": "~/sysScripts/fetchNepaliDate.sh",
     "calendar": {
-                  "mode"          : "year",
-                  "mode-mon-col"  : 4,
-                  "weeks-pos"     : "",
-                  "on-scroll"     : 1,
-                  "format": {
-                              "months":     "<span color='#89b4fa'><b>{}</b></span>",
-                              "days":       "<span color='#eba0ac'><b>{}</b></span>",
-                              "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-                              "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-                              "today":      "<span color='#f38ba8'><b><u>{}</u></b></span>"
-                              }
-                  },
+      "mode": "year",
+      "mode-mon-col": 4,
+      "weeks-pos": "",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#89b4fa'><b>{}</b></span>",
+        "days": "<span color='#eba0ac'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#f38ba8'><b><u>{}</u></b></span>"
+      }
+    },
   },
   "group/middle": {
     "orientation": "horizontal",
