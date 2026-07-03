@@ -33,6 +33,7 @@ return {
       'yaml-language-server',
       'docker-language-server',
       'gopls',
+      'marksman', -- Markdown LSP server
 
       -- Linters
       'luacheck', -- Lua linter
