@@ -10,6 +10,8 @@ hl.window_rule({
 	},
 	float = true,
 	size = { 1200, 600 },
+	rounding = 15,
+	border_color = "#89b4fa",
 })
 
 -- Open the tmuxSetup script in workspace 3 silently
@@ -40,4 +42,16 @@ hl.window_rule({
 	},
 	workspace = 15,
 	no_initial_focus = true,
+})
+
+-- Open pwvucontrol in float
+hl.window_rule({
+	name = "pwvucontrol-float",
+	match = {
+		class = "com.saivert.pwvucontrol",
+	},
+	float = true,
+	size = { 900, 400 },
+	rounding = 15,
+	border_color = "#89b4fa",
 })
