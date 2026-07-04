@@ -10,6 +10,8 @@ hl.window_rule({
 	},
 	float = true,
 	size = { 1200, 600 },
+	rounding = 15,
+	border_color = "#89b4fa",
 })
 
 -- Open the tmuxSetup script in workspace 3 silently
