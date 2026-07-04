@@ -31,3 +31,13 @@ hl.window_rule({
 	workspace = 15,
 	no_initial_focus = true,
 })
+
+-- Open the tmuxSetup script in workspace 3 silently
+hl.window_rule({
+	name = "tmuxSetup-workspace-3",
+	match = {
+		class = "dev.incog.tmux",
+	},
+	workspace = 3,
+	no_initial_focus = true,
+})
