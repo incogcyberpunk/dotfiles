@@ -55,3 +55,12 @@ hl.window_rule({
 	rounding = 15,
 	border_color = "#89b4fa",
 })
+
+-- Enable notifications on lockscreen
+hl.layer_rule({
+	name = "notifications-on-lockscreen",
+	match = {
+		namespace = "swaync-notification-window",
+	},
+	above_lock = 1,
+})
