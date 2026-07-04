@@ -21,3 +21,13 @@ hl.window_rule({
 	workspace = 4,
 	no_initial_focus = true,
 })
+
+-- Discord workspace
+hl.window_rule({
+	name = "discord-workspace-5",
+	match = {
+		initial_title = "Discord",
+	},
+	workspace = 15,
+	no_initial_focus = true,
+})
