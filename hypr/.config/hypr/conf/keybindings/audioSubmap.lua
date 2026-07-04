@@ -1,8 +1,13 @@
 local scripts = "~/.config/hypr/scripts"
 
 hl.define_submap("audioSubmap", function()
+	-- Toggle the current application's sink volume
 	hl.bind("T", hl.dsp.exec_cmd("~/sysScripts/toggleAppSound.sh"))
 
+	-- Open spotify
+	hl.bind("P", hl.dsp.exec_cmd(scripts .. "/spotify.sh"))
+
+	-- Spotify Binds
 	hl.bind("H", hl.dsp.exec_cmd("playerctl -p spotify previous"), { repeating = true, locked = true })
 	hl.bind("J", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh decrease"), { repeating = true })
 	hl.bind("K", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh increase"), { repeating = true })
@@ -13,12 +18,15 @@ hl.define_submap("audioSubmap", function()
 	hl.bind("UP", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh increase"), { repeating = true })
 	hl.bind("RIGHT", hl.dsp.exec_cmd("playerctl -p spotify next"), { repeating = true })
 
+	-- Binds to toggle sink and source volumes
 	hl.bind("A", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh toggle-sink"), { locked = true })
 	hl.bind("M", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh toggle-source"), { locked = true })
+
+	-- Binds to toggle play/pause for Spotify
 	hl.bind("SPACE", hl.dsp.exec_cmd("playerctl -p spotify play-pause"), { locked = true })
 
-	hl.bind("P", hl.dsp.exec_cmd(scripts .. "/spotify.sh", { workspace = "4" }))
 
+	-- Exit submap with Q or ESCAPE
 	hl.bind("Q", function()
 		hl.dispatch(
 			hl.dsp.exec_cmd(
