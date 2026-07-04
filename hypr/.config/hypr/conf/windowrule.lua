@@ -11,3 +11,13 @@ hl.window_rule({
 	float = true,
 	size = { 1200, 600 },
 })
+
+-- Open spotify workspace 4
+hl.window_rule({
+	name = "spotify-workspace-4",
+	match = {
+		class = "Spotify",
+	},
+	workspace = 4,
+	no_initial_focus = true,
+})
