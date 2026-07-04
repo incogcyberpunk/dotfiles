@@ -13,10 +13,6 @@ hl.define_submap("audioSubmap", function()
 	hl.bind("K", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh increase"), { repeating = true })
 	hl.bind("L", hl.dsp.exec_cmd("playerctl -p spotify next"), { repeating = true, locked = true })
 
-	hl.bind("LEFT", hl.dsp.exec_cmd("playerctl -p spotify previous"), { repeating = true })
-	hl.bind("DOWN", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh decrease"), { repeating = true })
-	hl.bind("UP", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh increase"), { repeating = true })
-	hl.bind("RIGHT", hl.dsp.exec_cmd("playerctl -p spotify next"), { repeating = true })
 
 	-- Binds to toggle sink and source volumes
 	hl.bind("A", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh toggle-sink"), { locked = true })
