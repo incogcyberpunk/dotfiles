@@ -36,7 +36,7 @@ hl.window_rule({
 hl.window_rule({
 	name = "discord-workspace-5",
 	match = {
-		initial_title = "Discord",
+		class = "vesktop",
 	},
 	workspace = 15,
 	no_initial_focus = true,
