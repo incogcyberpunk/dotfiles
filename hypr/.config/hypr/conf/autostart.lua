@@ -18,7 +18,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("swaync")
 
 	-- Vesktop
-	hl.exec_cmd("vesktop")
+	hl.exec_cmd("vesktop -m")
 
 	-- Launch hyprsunset and hypridle
 	hl.exec_cmd("hyprsunset")
