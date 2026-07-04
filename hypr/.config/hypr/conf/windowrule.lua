@@ -12,6 +12,16 @@ hl.window_rule({
 	size = { 1200, 600 },
 })
 
+-- Open the tmuxSetup script in workspace 3 silently
+hl.window_rule({
+	name = "tmuxSetup-workspace-3",
+	match = {
+		class = "dev.incog.tmux",
+	},
+	workspace = 3,
+	no_initial_focus = true,
+})
+
 -- Open spotify workspace 4
 hl.window_rule({
 	name = "spotify-workspace-4",
@@ -22,22 +32,12 @@ hl.window_rule({
 	no_initial_focus = true,
 })
 
--- Discord workspace
+-- Open discord workspace 15
 hl.window_rule({
 	name = "discord-workspace-5",
 	match = {
 		initial_title = "Discord",
 	},
 	workspace = 15,
-	no_initial_focus = true,
-})
-
--- Open the tmuxSetup script in workspace 3 silently
-hl.window_rule({
-	name = "tmuxSetup-workspace-3",
-	match = {
-		class = "dev.incog.tmux",
-	},
-	workspace = 3,
 	no_initial_focus = true,
 })
