@@ -1,7 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=WhatsApp Web
-Exec=/usr/bin/zen-browser --new-window https://web.whatsapp.com
-Icon=~/.local/share/icons/whatsapp.ico
