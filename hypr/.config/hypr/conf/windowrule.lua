@@ -38,7 +38,7 @@ hl.window_rule({
 hl.window_rule({
 	name = "discord-workspace-5",
 	match = {
-		class = "vesktop",
+		class = "equibop",
 	},
 	workspace = 15,
 	no_initial_focus = true,
@@ -63,4 +63,16 @@ hl.layer_rule({
 		namespace = "swaync-notification-window",
 	},
 	above_lock = 1,
+})
+
+-- Float the QR code generated using clipboardQR.sh script
+hl.window_rule({
+	name = "clipboardQR-float",
+	match = {
+		class = "qr.cliboard",
+	},
+	float = true,
+	size = { 300, 400 },
+	rounding = 15,
+	border_color = "#89b4fa",
 })
