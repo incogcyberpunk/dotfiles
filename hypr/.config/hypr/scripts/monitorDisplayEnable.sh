@@ -6,7 +6,6 @@ hl.monitor({
     mode = \"preferred\",
     position = \"0x0\",
     scale = '1',
-    bitdepth = 10,
 })
 hl.monitor({
     output = \"eDP-1\",
