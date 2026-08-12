@@ -24,3 +24,4 @@
 	diff = diffnav
 [mergetool]
 	keepBackup = false
+	keepTemporaries = false
