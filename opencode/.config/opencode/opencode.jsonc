@@ -7,5 +7,9 @@
     "external_directory": "ask"
   },
   "shell": "/usr/bin/zsh",
+  "plugin": [
+    "@dietrichgebert/ponytail",
+    "opencode-omniroute-auth"
+  ],
   "provider": {}
 }
