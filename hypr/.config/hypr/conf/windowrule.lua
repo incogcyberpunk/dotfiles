@@ -72,7 +72,18 @@ hl.window_rule({
 		class = "qr.cliboard",
 	},
 	float = true,
-	size = { 300, 400 },
+	size = { 300, 500 },
 	rounding = 15,
 	border_color = "#89b4fa",
+})
+
+-- Float print utility window
+hl.window_rule({
+	name = "system-config-printer-float",
+	match = {
+		class = "system-config-printer",
+	},
+	float = true,
+	size = { 800, 600 },
+	rounding = 15,
 })
