@@ -9,7 +9,7 @@ font-size = 13
 
 # --- Visuals ---
 theme = Catppuccin Mocha
-background-opacity = 0.9
+background-opacity = 0.8
 
 # --- Keybindings ---
 keybind = alt+enter=unbind
