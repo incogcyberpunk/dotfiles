@@ -1,0 +1,10 @@
+[Unit]
+Description=Forward Bluetooth AVRCP media controls to MPRIS
+After=hyprland-session.target
+
+[Service]
+ExecStart=/usr/bin/mpris-proxy
+Restart=on-failure
+
+[Install]
+WantedBy=hyprland-session.target
