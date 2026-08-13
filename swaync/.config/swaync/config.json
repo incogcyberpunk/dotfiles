@@ -2,44 +2,32 @@
   "$schema": "/etc/xdg/swaync/configSchema.json",
   "positionX": "right",
   "positionY": "top",
-	"cssPriority": "user",
+  "cssPriority": "user",
 
-  "control-center-width": 380,
-  "control-center-height": 900, 
-  "control-center-margin-top": 2,
-  "control-center-margin-bottom": 2,
-  "control-center-margin-right": 1,
+  "control-center-width": 420,
+  "control-center-height": 860,
+  "control-center-margin-top": 8,
+  "control-center-margin-bottom": 8,
+  "control-center-margin-right": 8,
   "control-center-margin-left": 0,
 
-  "notification-window-width": 400,
+  "notification-window-width": 420,
   "notification-icon-size": 48,
-  "notification-body-image-height": 0,
-  "notification-body-image-width": 0,
+  "notification-body-image-height": 100,
+  "notification-body-image-width": 200,
 
-  "timeout": 4,
-  "timeout-low": 2,
+  "timeout": 5,
+  "timeout-low": 3,
   "timeout-critical": 0,
-  
+
   "fit-to-screen": false,
   "keyboard-shortcuts": true,
   "image-visibility": "when-available",
-  "transition-time": 100,
+  "transition-time": 200,
   "hide-on-clear": false,
-  "hide-on-action": false,
+  "hide-on-action": true,
   "script-fail-notify": true,
-  "scripts": {
-    "example-script": {
-      "exec": "echo 'Do something...'",
-      "urgency": "Normal"
-    }
-  },
-  "notification-visibility": {
-    "example-name": {
-      "state": "muted",
-      "urgency": "Low",
-      "app-name": "Spotify"
-    }
-  },
+
   "widgets": [
     "mpris",
     "buttons-grid",
@@ -53,53 +41,38 @@
     "title": {
       "text": "Notifications",
       "clear-all-button": true,
-      "button-text": "Clear All"
+      "button-text": "󰎟  Clear"
     },
     "dnd": {
-      "text": "Do not disturb",
-      "do-not-disturb-on-startup": false,
-     "do-not-disturb": false
-
-    },
-    "label": {
-      "max-lines": 1,
-      "text": " "
+      "text": "Do Not Disturb"
     },
     "mpris": {
       "image-size": 96,
-      "image-radius": 19,
+      "image-radius": 12,
       "show-album-art": "playing",
-      "blacklist": [
-        "firefox",
-        "chromium",
-        "brave",
-        "mpv",
-        "playerctl"
-      ],
+      "blacklist": ["firefox", "chromium", "brave", "mpv"],
       "autohide": true,
       "prefer": ["spotify"]
-      
     },
     "volume": {
-      "label": "󰕾 ",
-        "show-per-app": false
+      "label": "󰕾",
+      "show-per-app": false
     },
     "backlight": {
-      "label": "󰃠 ",
+      "label": "󰃠",
       "device": "intel_backlight",
-      "subsystem": "backlight", 
-      "min": 10
+      "subsystem": "backlight",
+      "min": 5
     },
     "buttons-grid": {
       "buttons-per-row": 3,
       "actions": [
         {
-          "label": "",
-          "command": "wpctl set-mute @DEFAULT_SINK@ toggle",
-          "name": "btn-audio"
+          "label": "󰖀",
+          "command": "wpctl set-mute @DEFAULT_SINK@ toggle"
         },
         {
-          "label": "",
+          "label": "󰍬",
           "command": "wpctl set-mute @DEFAULT_SOURCE@ toggle"
         },
         {
@@ -108,18 +81,16 @@
         },
         {
           "label": "󰏘",
-          "command": "hyprpicker"
+          "command": "hyprpicker -a"
         },
-
         {
           "label": "󰋩",
           "command": "waypaper"
         },
         {
-          "label": "",
+          "label": "󰗽",
           "command": "wlogout"
         }
-
       ]
     }
   }
