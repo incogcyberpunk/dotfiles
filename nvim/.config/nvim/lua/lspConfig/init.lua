@@ -15,6 +15,7 @@ vim.lsp.enable {
   'docker_language_server',
   'gopls',
   'marksman',
+  'systemd_lsp',
 }
 
 -- Adding .git as a guaranteed fallback root marker, for all servers
