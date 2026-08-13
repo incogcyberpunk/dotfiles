@@ -2,4 +2,6 @@ prompt "Emoji"
 skin-tone neutral
 action type
 max-recent 0
+keybinding-copy Control+c
+selector-args -kb-secondary-copy ""
 
