@@ -7,7 +7,7 @@ hl.define_submap("changeBrightness", function()
 	hl.bind("Q", function()
 		hl.dispatch(
 			hl.dsp.exec_cmd(
-				"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Brightness Submap' "
+				"notify-send -t 900 -h string:x-canonical-private-synchronous:brightnessSubmap 'Exited Brightness Submap' "
 			)
 		)
 		hl.dispatch(hl.dsp.submap("reset"))
@@ -15,7 +15,7 @@ hl.define_submap("changeBrightness", function()
 	hl.bind("ESCAPE", function()
 		hl.dispatch(
 			hl.dsp.exec_cmd(
-				"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Brightness Submap' "
+				"notify-send -t 900 -h string:x-canonical-private-synchronous:brightnessSubmap 'Exited Brightness Submap' "
 			)
 		)
 		hl.dispatch(hl.dsp.submap("reset"))
@@ -23,7 +23,7 @@ hl.define_submap("changeBrightness", function()
 	-- hl.bind("catchall", function()
 	-- 	hl.dispatch(
 	-- 		hl.dsp.exec_cmd(
-	-- 			"notify-send -t 900 -h string:x-canonical-private-synchronous:audio-submap 'Exited Brightness Submap' "
+	-- 			"notify-send -t 900 -h string:x-canonical-private-synchronous:brightnessSubmap 'Exited Brightness Submap' "
 	-- 		)
 	-- 	)
 	-- 	hl.dispatch(hl.dsp.submap("reset"))
@@ -33,7 +33,7 @@ end)
 hl.bind(
 	"SUPER + B",
 	hl.dsp.exec_cmd(
-		"notify-send -u low -h string:x-canonical-private-synchronous:brightness-submap 'Entering Brightness Submap'"
+		"notify-send -u low -h string:x-canonical-private-synchronous:brightnessSubmap 'Entering Brightness Submap'"
 	),
 	{ locked = true }
 )
