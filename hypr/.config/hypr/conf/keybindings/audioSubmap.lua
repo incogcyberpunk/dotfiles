@@ -12,8 +12,8 @@ hl.define_submap("audioSubmap", function()
 
 	-- Spotify Binds
 	hl.bind("H", hl.dsp.exec_cmd("playerctl -p spotify previous"), { repeating = true, locked = true })
-	hl.bind("J", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh decrease"), { repeating = true })
-	hl.bind("K", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh increase"), { repeating = true })
+	hl.bind("J", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh decrease"), { repeating = true, locked = true })
+	hl.bind("K", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh increase"), { repeating = true, locked = true })
 	hl.bind("L", hl.dsp.exec_cmd("playerctl -p spotify next"), { repeating = true, locked = true })
 
 	-- Binds for apps except Spotify
