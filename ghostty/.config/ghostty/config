@@ -1,7 +1,7 @@
 # --- Font Settings ---
-font-family = "JetBrainsMono NF"
+font-family = "Maple Mono NF"
 # 700 weight corresponds to Bold
-font-style = "SemiBold"
+font-style = "Medium"
 font-size = 13
 # Fallback font
 font-family = "Noto Sans Devanagari"
@@ -9,7 +9,7 @@ font-size = 13
 
 # --- Visuals ---
 theme = Catppuccin Mocha
-background-opacity = 0.9
+background-opacity = 0.8
 
 # --- Keybindings ---
 keybind = alt+enter=unbind

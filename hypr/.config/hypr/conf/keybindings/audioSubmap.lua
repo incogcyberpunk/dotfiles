@@ -4,13 +4,16 @@ hl.define_submap("audioSubmap", function()
 	-- Toggle the current application's sink volume
 	hl.bind("T", hl.dsp.exec_cmd("~/sysScripts/toggleAppSound.sh"))
 
+	-- Add bind for quick bluetooth connect/disconnect
+	hl.bind("B", hl.dsp.exec_cmd("~/sysScripts/toggleBass430.sh"), { locked = true })
+
 	-- Open spotify
 	hl.bind("P", hl.dsp.exec_cmd(scripts .. "/spotify.sh"))
 
 	-- Spotify Binds
 	hl.bind("H", hl.dsp.exec_cmd("playerctl -p spotify previous"), { repeating = true, locked = true })
-	hl.bind("J", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh decrease"), { repeating = true })
-	hl.bind("K", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh increase"), { repeating = true })
+	hl.bind("J", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh decrease"), { repeating = true, locked = true })
+	hl.bind("K", hl.dsp.exec_cmd(scripts .. "/changeAudio.sh increase"), { repeating = true, locked = true })
 	hl.bind("L", hl.dsp.exec_cmd("playerctl -p spotify next"), { repeating = true, locked = true })
 
 	-- Binds for apps except Spotify

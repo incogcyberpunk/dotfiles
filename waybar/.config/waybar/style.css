@@ -1,60 +1,68 @@
 /*
- * __        __          _                  ____  _         _
- * \ \      / /_ _ _   _| |__   __ _ _ __  / ___|| |_ _   _| | ___
- *  \ \ /\ / / _` | | | | '_ \ / _` | '__| \___ \| __| | | | |/ _ \
- *   \ V  V / (_| | |_| | |_) | (_| | |     ___) | |_| |_| | |  __/
- *    \_/\_/ \__,_|\__, |_.__/ \__,_|_|    |____/ \__|\__, |_|\___|
- *                 |___/                              |___/
+ *  ___                             ___ _ _ _
+ * / _ \  _   _ _ __ ___  _ __ ___ | _ (_) | |___
+ *| |_| || | | | '__/ _ \| '__/ _ \|  _/ | | (_-<
+ * \___/ |_._| |_| \___/|_|  \___/|_| |_|_|_/__/
  *
+ * Theme: Aurora Pills  (Catppuccin Mocha)
+ * Soft floating pills, per-module accent icons, gentle depth.
  * -----------------------------------------------------
 */
 
-/* -----------------------------------------------------
- * Import Catppuccin colors
- * ----------------------------------------------------- */
 @import 'mocha.css';
-@define-color backgroundlight #FFFFFF;
-@define-color backgrounddark #FFFFFF;
-@define-color workspacesbackground1 #FFFFFF;
-@define-color workspacesbackground2 #CCCCCC;
-@define-color bordercolor #FFFFFF;
-@define-color textcolor1 #000000;
-@define-color textcolor2 #000000;
-@define-color textcolor3 #FFFFFF;
-@define-color iconcolor #FFFFFF;
+
+/* -----------------------------------------------------
+ * Theme tokens
+ * ----------------------------------------------------- */
+@define-color bar_bg          rgba(0, 0, 0, 0);
+@define-color pill_bg         rgba(30, 30, 46, 0.92);   /* base   */
+@define-color pill_bg_alt     rgba(24, 24, 37, 0.92);   /* mantle */
+@define-color pill_border     rgba(69, 71, 90, 0.65);   /* surface1 */
+@define-color pill_hover      rgba(49, 50, 68, 0.95);   /* surface0 */
+@define-color textcolor       #cdd6f4;
+@define-color textdim         #a6adc8;
 
 /* -----------------------------------------------------
  * General
  * ----------------------------------------------------- */
 
 * {
-    font-family:"JetBrainsMono Nerd Font";
-    font-weight: 500;
+    font-family: "JetBrainsMono Nerd Font";
+    font-weight: 600;
+    font-size: 14px;
     background-color: transparent;
+    border: none;
+    box-shadow: none;
+    min-height: 0;
 }
 
 window#waybar {
+    background-color: @bar_bg;
     transition-property: background-color;
-    transition-duration: .5s;
+    transition-duration: .4s;
 }
 
 .modules-left {
-    padding-left: 5px;
+    padding-left: 8px;
 }
 
-#custom-archicon {
-    font-size: 20px;
+.modules-right {
+    padding-right: 8px;
+}
+
+/* Shared pill look */
+#workspaces,
+#middle,
+#pulseaudio,
+#battery,
+#tools,
+#custom-notification {
+    background-color: @pill_bg;
+    border: 1px solid @pill_border;
+    border-radius: 16px;
+    margin: 5px 4px;
+    padding: 1px 12px;
     color: @textcolor;
-    margin: 0px 15px 0px 0px;
-}
-
-#middle {
-    margin: 3px 0;
-    padding: 0 10px;
-    border: 0px solid #f38ba8;
-    background-color: @crust;
-    border-radius: 20px;
-
 }
 
 /* -----------------------------------------------------
@@ -62,226 +70,73 @@ window#waybar {
  * ----------------------------------------------------- */
 
 #workspaces {
-    margin: 3px 0 ;
-    padding: 0 5px;
-    background-color: @crust;
-    border-radius: 15px;
-    font-size: 14px;
+    padding: 1px 6px;
 }
 
 #workspaces button {
-    border: 0px;
-    margin: 4px 5px 4px 0px;
-    padding: 0px 4px 0px 4px;
-    color: @textcolor3;
-    transition: all 0.5s ease-in-out;
+    color: @overlay1;
+    background-color: transparent;
+    border-radius: 12px;
+    margin: 4px 2px;
+    padding: 0 8px;
+    font-size: 13px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#workspaces button.visible {
+    color: @subtext0;
 }
 
 #workspaces button.active {
-    color: @peach;
-    border-radius: 90px;
-    background-color: @mantle;
-    font-weight: bold;
-    font-size: 18px;
+    color: @crust;
+    background-color: @lavender;
+    padding: 0 14px;
+    font-weight: 800;
+}
+
+#workspaces button.urgent {
+    color: @crust;
+    background-color: @red;
 }
 
 #workspaces button:hover {
-    color: @textcolor1;
-    background: @workspacesbackground2;
-    border-radius: 15px;
-}
-
-/* -----------------------------------------------------
- * Tooltips ( Needs more work )
- * ----------------------------------------------------- */
-
-tooltip {
-    border-radius: 16px;
-    opacity: 1;
-        font-size: 16px;
-    background-color: @base;
-    padding: 20px;
-        margin-top: 5px;
-}
-
-tooltip label {
     color: @text;
+    background-color: @pill_hover;
 }
 
 /* -----------------------------------------------------
- * Window
+ * Center group : archicon + clock
  * ----------------------------------------------------- */
 
-#window {
-    margin: 0px 15px 0px 0px;
-    border-radius: 12px;
-    color: @textcolor;
-    font-size: 14px;
-    font-weight: normal;
+#middle {
+    background-color: @pill_bg_alt;
+    padding: 1px 6px;
 }
 
-window#waybar.empty #window {
-    background-color: transparent;
+#custom-archicon {
+    color: @blue;
+    font-size: 17px;
+    padding: 0 10px 0 6px;
+    margin: 0;
 }
-
-/* -----------------------------------------------------
- * Modules
- * ----------------------------------------------------- */
-
-.modules-left>widget:first-child>#workspaces {
-    margin-left: 0;
-}
-
-.modules-right>widget:last-child>#workspaces {
-    margin-right: 0;
-}
-
-/* -----------------------------------------------------
-Group/tools
-* ----------------------------------------------------- */
-
-#tools {
-    margin: 3px 3px;
-    padding: 2px 8px;
-    background-color: @crust;
-    border-radius: 15px;
-}
-
-#custom-tools {
-    margin-right: 10px;
-}
-
-
-#custom-hypridle {
-    margin-right: 16px;
-}
-
-#custom-hypridle.active {
-    color: @iconcolor;
-}
-
-#custom-hypridle.notactive {
-    color: #dc2f2f;
-}
-
-/* -----------------------------------------------------
- * Idle Inhibator
- * ----------------------------------------------------- */
-
-#idle_inhibitor {
-    margin-right: 15px;
-    font-size: 16px;
-    font-weight: bold;
-    color: @iconcolor;
-}
-
-#idle_inhibitor.activated {
-    margin-right: 15px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #dc2f2f;
-}
-
-/* -----------------------------------------------------
- * Custom Notification
- * ----------------------------------------------------- */
-
-#custom-notification {
-    margin: 3px 5px 3px 0;
-    padding: 0 12px 0 8px;
-    background-color: @crust;
-    border-radius: 15px;
-    font-size: 16px;
-}
-
-/* -----------------------------------------------------
- * Custom Exit
- * ----------------------------------------------------- */
-
-#custom-exit {
-    margin: 0 5px;
-}
-/* -----------------------------------------------------
- * Power Profiles Daemon
- * ----------------------------------------------------- */
-
-#power-profiles-daemon {
-    margin: 0px 13px 0px 0px;
-    padding: 0px;
-    font-size: 14px;
-    color: @iconcolor;
-}
-
-/* -----------------------------------------------------
- * Clock
- * ----------------------------------------------------- */
 
 #clock {
-    font-size: 15px;
-    color: @textcolor;
-}
-/* -----------------------------------------------------
- * Backlight
- * ----------------------------------------------------- */
-
-#backlight {
-
+    color: @text;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 8px 0 0;
 }
 
 /* -----------------------------------------------------
- * Pulseaudio
+ * Audio
  * ----------------------------------------------------- */
 
 #pulseaudio {
-    font-size: 14px;
-    padding: 0 6px;
-    border: 0px solid #f38ba8;
-    background-color: @crust;
-    color: @textcolor;
-    border-radius: 15px;
-    margin: 3px 1px;
+    color: @mauve;
 }
 
 #pulseaudio.muted {
-    color: @textcolor;
-}
-
-/* -----------------------------------------------------
- * Network
- * ----------------------------------------------------- */
-
-#network {
-    font-size: 14px;
-    color: @textcolor;
-    border-radius: 15px;
-    margin: 0px 15px 0px 0px;
-}
-
-#network.ethernet {
-    color: @textcolor;
-}
-
-#network.wifi {
-    color: @textcolor;
-}
-
-/* -----------------------------------------------------
- * Bluetooth
- * ----------------------------------------------------- */
-
-#bluetooth,
-#bluetooth.on,
-#bluetooth.connected {
-    font-size: 14px;
-    color: @textcolor;
-    border-radius: 15px;
-    margin: 10px 15px 10px 0px;
-}
-
-#bluetooth.off {
-    background-color: transparent;
-    padding: 0px;
-    margin: 0px;
+    color: @overlay1;
 }
 
 /* -----------------------------------------------------
@@ -289,50 +144,121 @@ Group/tools
  * ----------------------------------------------------- */
 
 #battery {
-    font-size: 14px;
-    padding: 0 8px;
-    border: 0px solid #f38ba8;
-    background-color: @crust;
-    color: @textcolor;
-    border-radius: 15px;
-    margin: 3px 0;
+    color: @green;
+}
+
+#battery.warning:not(.charging) {
+    color: @yellow;
 }
 
 #battery.charging,
 #battery.plugged {
-    color: @textcolor;
+    color: @teal;
 }
 
 @keyframes blink {
     to {
-        background-color: @backgroundlight;
-        color: @textcolor2;
+        background-color: @red;
+        color: @crust;
     }
 }
 
 #battery.critical:not(.charging) {
-    color: #f53c3c;
+    color: @red;
     animation-name: blink;
-    animation-duration: 0.5s;
+    animation-duration: 1s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
 
 /* -----------------------------------------------------
- * Tray
+ * Tools drawer : backlight / tray / exit
  * ----------------------------------------------------- */
 
-#tray {
-    font-size: 14px;
-    margin: 0 8px;
+#tools {
+    padding: 1px 10px;
 }
 
-#tray>.passive {
+#custom-tools {
+    color: @peach;
+    padding-right: 4px;
+}
+
+#backlight {
+    color: @yellow;
+    padding: 0 10px;
+}
+
+#tray {
+    padding: 0 6px;
+}
+
+#tray > .passive {
     -gtk-icon-effect: dim;
 }
 
-#tray>.needs-attention {
+#tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: @red;
+}
+
+#custom-exit {
+    color: @red;
+    padding: 0 4px 0 8px;
+}
+
+/* -----------------------------------------------------
+ * Notifications
+ * ----------------------------------------------------- */
+
+#custom-notification {
+    color: @sky;
+    font-size: 15px;
+    padding: 1px 13px;
+}
+
+/* -----------------------------------------------------
+ * Misc modules (kept styled in case they are enabled)
+ * ----------------------------------------------------- */
+
+#window {
+    color: @subtext1;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+window#waybar.empty #window {
+    background-color: transparent;
+}
+
+#network,
+#bluetooth,
+#power-profiles-daemon,
+#custom-hypridle,
+#idle_inhibitor {
+    color: @lavender;
+    padding: 0 8px;
+}
+
+#custom-hypridle.notactive,
+#idle_inhibitor.activated {
+    color: @red;
+}
+
+/* -----------------------------------------------------
+ * Tooltips
+ * ----------------------------------------------------- */
+
+tooltip {
+    background-color: @pill_bg_alt;
+    border: 1px solid @pill_border;
+    border-radius: 16px;
+    padding: 12px;
+    margin-top: 6px;
+}
+
+tooltip label {
+    color: @text;
+    font-size: 14px;
+    font-weight: 500;
 }

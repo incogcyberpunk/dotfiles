@@ -9,7 +9,7 @@ initial-tool = "brush"
 # Configure the command to be called on copy, for example `wl-copy`
 copy-command = "wl-copy"
 # Increase or decrease the size of the annotations
-annotation-size-factor = 2
+annotation-size-factor = 0.5
 output-filename = "~/Pictures/Screenshots/ss-%Y%m%d_%H%M%S.png"
 save-after-copy = false
 default-hide-toolbars = false
@@ -32,10 +32,6 @@ no-window-decoration = true
 zoom-factor = 0.8
 # experimental feature (0.20.1): The length to move the text when using arrow keys. defaults to 50.0
 text-move-length = 50.0 
-# experimental feature (0.20.1): Scale factor on the input image when it was taken (e.g. DPI scale on the monitor it was recorded from).
-# This may be more useful to set via the command line.
-# Note, this is ignored with explicit resize.
-input-scale = 1.0
 
 
 [keybinds]

@@ -38,7 +38,7 @@ hl.window_rule({
 hl.window_rule({
 	name = "discord-workspace-5",
 	match = {
-		class = "vesktop",
+		class = "equibop",
 	},
 	workspace = 15,
 	no_initial_focus = true,
@@ -54,4 +54,36 @@ hl.window_rule({
 	size = { 900, 400 },
 	rounding = 15,
 	border_color = "#89b4fa",
+})
+
+-- Enable notifications on lockscreen
+hl.layer_rule({
+	name = "notifications-on-lockscreen",
+	match = {
+		namespace = "swaync-notification-window",
+	},
+	above_lock = 1,
+})
+
+-- Float the QR code generated using clipboardQR.sh script
+hl.window_rule({
+	name = "clipboardQR-float",
+	match = {
+		class = "qr.cliboard",
+	},
+	float = true,
+	size = { 300, 500 },
+	rounding = 15,
+	border_color = "#89b4fa",
+})
+
+-- Float print utility window
+hl.window_rule({
+	name = "system-config-printer-float",
+	match = {
+		class = "system-config-printer",
+	},
+	float = true,
+	size = { 800, 600 },
+	rounding = 15,
 })

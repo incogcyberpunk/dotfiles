@@ -17,8 +17,8 @@ hl.on("hyprland.start", function()
 	-- Load Notification Daemon
 	hl.exec_cmd("swaync")
 
-	-- Vesktop
-	hl.exec_cmd("vesktop -m")
+	-- Equibop
+	hl.exec_cmd("equibop")
 
 	-- Launch hyprsunset and hypridle
 	hl.exec_cmd("hyprsunset")

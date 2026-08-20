@@ -1,0 +1,10 @@
+[Unit]
+Description=playerctld - tracks most recently active MPRIS player
+After=hyprland-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/playerctld daemon
+
+[Install]
+WantedBy=hyprland-session.target
