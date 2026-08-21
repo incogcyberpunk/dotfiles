@@ -1,0 +1,10 @@
+[Unit]
+Description=Change wallpaper every hour
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+Unit=random-wallpaper.service
+
+[Install]
+WantedBy=timers.target
