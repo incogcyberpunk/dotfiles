@@ -1,0 +1,10 @@
+[Unit]
+Description=Build the persistent "Configs" tmux session (detached)
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=%h/sysScripts/tmuxSetup
+
+[Install]
+WantedBy=default.target

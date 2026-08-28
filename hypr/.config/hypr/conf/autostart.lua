@@ -28,8 +28,9 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 
-	-- Execute the tmux script
-	hl.exec_cmd("~/.config/hypr/scripts/tmuxSetup")
+	-- Attach a terminal to the Configs tmux session (built by tmuxSetup.service).
+	-- Placed on workspace 3 by the dev.incog.tmux rule in windowrule.lua.
+	hl.exec_cmd("ghostty --class=dev.incog.tmux -e tmux attach -t Configs")
 
 	-- Load the nepali date
 	hl.exec_cmd("~/sysScripts/fetchNepaliDate.sh")
