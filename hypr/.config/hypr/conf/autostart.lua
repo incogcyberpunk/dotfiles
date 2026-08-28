@@ -29,7 +29,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 
 	-- Attach a terminal to the Configs tmux session (built by tmuxSetup.service).
-	-- Placed on workspace 3 by the dev.incog.tmux rule in windowrule.lua.
 	hl.exec_cmd("ghostty --class=dev.incog.tmux -e tmux attach -t Configs")
 
 	-- Load the nepali date
