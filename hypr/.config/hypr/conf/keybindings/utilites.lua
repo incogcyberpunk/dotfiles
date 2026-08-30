@@ -16,7 +16,7 @@ hl.bind(mainMod .. " + D", hl.dsp.workspace.toggle_special("magic"))
 
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t"))
 
-hl.bind("ALT + H", hl.dsp.exec_cmd(scripts .. "/hypridle.sh toggle"))
+hl.bind("ALT + H", hl.dsp.exec_cmd(scripts .. "/hypridle.sh toggle"), { locked = true })
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("rofimoji"))
 
 -- Add bind for vim-mode script
