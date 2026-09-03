@@ -5,6 +5,15 @@
 hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl --user start hyprland-session.target")
 
+	-- Publish this Hyprland instance's signature into the persistent tmux server.
+	-- The tmux server is spawned by tmuxSetup.service (a systemd user service under
+	-- default.target), so it comes up independently of Hyprland and never inherits
+	-- HYPRLAND_INSTANCE_SIGNATURE. Without it, `hyprctl` from any tmux pane fails
+	-- with "HYPRLAND_INSTANCE_SIGNATURE not set". Pushing it into the server's global
+	-- env lets new panes talk to hyprctl. $HYPRLAND_INSTANCE_SIGNATURE here is
+	-- Hyprland's own env, so it is always the current, live instance.
+	hl.exec_cmd('tmux set-environment -g HYPRLAND_INSTANCE_SIGNATURE "$HYPRLAND_INSTANCE_SIGNATURE"')
+
 	-- Using awww(wayland wallpaper daemon)
 	hl.exec_cmd("awww-daemon")
 
@@ -44,5 +53,11 @@ hl.on("workspace.move_to_monitor", function(ws, m)
 end)
 
 hl.on("hyprland.shutdown", function()
+	-- Remove the signature from the tmux server before Hyprland exits. The tmux
+	-- server outlives Hyprland (kept alive so sessions stay attachable over SSH when
+	-- only multi-user.target is up), so a leftover signature would be stale and point
+	-- at a dead socket, making `hyprctl` in headless sessions fail confusingly.
+	-- Clearing it here keeps the server's env honest: set only while Hyprland runs.
+	os.execute("tmux set-environment -gu HYPRLAND_INSTANCE_SIGNATURE")
 	os.execute("systemctl --user stop hyprland-session.target")
 end)
