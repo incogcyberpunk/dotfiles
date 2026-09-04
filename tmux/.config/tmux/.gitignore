@@ -1,0 +1,3 @@
+# TPM-managed plugins are cloned by tmux (prefix + I), not tracked here.
+# tmux.conf declares them; TPM restores them on a new machine.
+plugins/
