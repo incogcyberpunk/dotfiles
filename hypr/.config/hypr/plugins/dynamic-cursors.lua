@@ -99,7 +99,7 @@ if hl.plugin.dynamic_cursors then
 					timeout = 1000,
 
 					-- show cursor behaviour `tilt`, `rotate`, etc. while shaking
-					effects = true,
+					effects = false,
 
 					-- enable ipc events for shake
 					-- see the `ipc` section below
