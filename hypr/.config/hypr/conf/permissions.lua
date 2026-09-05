@@ -14,3 +14,6 @@ hl.permission({ binary = "/usr/bin/obs", type = "screencopy", mode = "allow" })
 hl.permission({ binary = "/usr/bin/hyprlock", type = "screencopy", mode = "allow" })
 hl.permission({ binary = "/usr/bin/equibop", type = "screencopy", mode = "ask" })
 hl.permission({ binary = "/usr/bin/zen-browser", type = "screencopy", mode = "ask" })
+
+-- Permission for hyprpm to load plugins
+hl.permission({ binary = "/usr/(bin|local/bin)/hyprpm", type = "plugin", mode = "allow" })
