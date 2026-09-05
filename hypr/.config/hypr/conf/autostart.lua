@@ -37,8 +37,8 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 
-	-- Attach a terminal to the Configs tmux session (built by tmuxSetup.service).
-	hl.exec_cmd("ghostty --class=dev.incog.tmux -e tmux attach -t Configs")
+	-- Attach a terminal to the tmux server after Continuum restores it.
+	hl.exec_cmd("ghostty --class=dev.incog.tmux -e tmux")
 
 	-- Load the nepali date
 	hl.exec_cmd("~/sysScripts/fetchNepaliDate.sh")
