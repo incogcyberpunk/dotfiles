@@ -14,6 +14,9 @@ require("workspaces")
 -- Cursor
 require("conf.cursor")
 
+-- Plugins
+require("plugins.dynamic-cursors")
+
 -- Touchpad
 require("conf.touchpad")
 

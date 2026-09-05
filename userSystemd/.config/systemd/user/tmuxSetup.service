@@ -1,10 +1,10 @@
 [Unit]
-Description=Build the persistent "Configs" tmux session (detached)
+Description=Start tmux for Continuum restore
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=%h/sysScripts/tmuxSetup
+ExecStart=tmux new-session -d
 
 [Install]
 WantedBy=default.target
