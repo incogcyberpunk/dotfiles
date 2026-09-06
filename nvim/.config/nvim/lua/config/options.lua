@@ -6,8 +6,8 @@ vim.opt.clipboard = 'unnamedplus'
 
 vim.opt.wrap = true      -- Display lines as one long line (default: true)
 vim.opt.linebreak = true -- Companion to wrap, don't split words (default: false)
-vim.opt.mouse =
-'nv'                     -- Enable mouse mode (default: '') vim.opt.autoindent = true -- Copy indent from current line when starting new one (default: true)
+vim.opt.mouse = 'nv'     -- Enable mouse mode (default: '')
+vim.opt.autoindent = true -- Copy indent from current line when starting new one (default: true)
 
 -- Case related options
 vim.opt.ignorecase = true
