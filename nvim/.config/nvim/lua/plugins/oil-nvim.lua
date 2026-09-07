@@ -1,7 +1,7 @@
 return {
   'incogcyberpunk/oil.nvim',
   branch = 'master',
-  enabled = true,
+  enabled = false,
   dependencies = { { 'echasnovski/mini.icons', opts = {} } },
   lazy = true,
   keys = {
