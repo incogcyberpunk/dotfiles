@@ -43,4 +43,26 @@ return {
       permanent_delete = false,
     },
   },
+
+  config = function(_, opts)
+    local mf = require 'mini.files'
+    mf.setup(opts)
+
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesBufferCreate',
+      callback = function(args)
+        local buf = args.data.buf_id
+        -- Explorer buffers are scratch (buftype=nofile), where `:w` errors
+        -- with E382 and no write autocmd fires. 'acwrite' makes the buffer
+        -- writable but delegates the actual write to a BufWriteCmd event.
+        vim.bo[buf].buftype = 'acwrite'
+        vim.api.nvim_create_autocmd('BufWriteCmd', {
+          buffer = buf,
+          callback = function()
+            mf.synchronize()
+          end,
+        })
+      end,
+    })
+  end,
 }
