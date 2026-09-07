@@ -10,13 +10,5 @@ return {
       show_end = false,
       show_exact_scope = false,
     },
-    exclude = {
-      filetypes = {
-        'startify',
-        'dashboard',
-        'neogitstatus',
-        'Trouble',
-      },
-    },
   },
 }
