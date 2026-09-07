@@ -14,8 +14,8 @@ return {
     },
   },
   opts = {
-    -- Set to false to disable oil.nvim to open when opening a directory
-    default_file_explorer = false,
+    -- Set to true to allow oil.nvim to open when opening a directory
+    default_file_explorer = true,
     -- Skip confirmation for simple edits
     skip_confirm_for_simple_edits = true,
     delete_to_trash = true,
