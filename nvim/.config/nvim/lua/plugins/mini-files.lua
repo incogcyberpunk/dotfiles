@@ -4,6 +4,30 @@ return {
   -- mini.icons supplies the file/folder glyphs shown in the explorer.
   dependencies = { { 'echasnovski/mini.icons', opts = {} } },
 
+  -- Lazy-load: the plugin is only pulled in the first time one of these keys
+  -- is pressed, so it adds nothing to startup time.
+  keys = {
+    {
+      '-',
+      function()
+        -- Open focused on the directory of the current file (with that file
+        -- pre-selected). Unnamed buffers have no path, so fall back to cwd.
+        local buf_name = vim.api.nvim_buf_get_name(0)
+        local path = buf_name ~= '' and buf_name or vim.uv.cwd()
+        require('mini.files').open(path, true)
+      end,
+      desc = 'Open mini.files (at current file)',
+    },
+    {
+      '_',
+      function()
+        -- Always open at the current working directory (project root).
+        require('mini.files').open(vim.uv.cwd(), true)
+      end,
+      desc = 'Open mini.files (cwd)',
+    },
+  },
+
   opts = {
     windows = {
       preview = true, -- show a preview of the entry under the cursor
