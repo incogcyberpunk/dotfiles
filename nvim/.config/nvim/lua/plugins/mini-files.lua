@@ -48,6 +48,10 @@ return {
     local mf = require 'mini.files'
     mf.setup(opts)
 
+    -- Listen for mini.files' plugin-defined `User` event, fired whenever it
+    -- creates an explorer buffer. The callback below makes `:w` synchronize
+    -- that buffer with the filesystem; the default `=` mapping still invokes
+    -- the same action directly.
     vim.api.nvim_create_autocmd('User', {
       pattern = 'MiniFilesBufferCreate',
       callback = function(args)
