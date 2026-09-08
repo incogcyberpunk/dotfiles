@@ -38,7 +38,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 
 	-- Attach a terminal to the tmux server after Continuum restores it.
-	hl.exec_cmd("ghostty --class=dev.incog.tmux -e tmux")
+	hl.exec_cmd("ghostty --class=dev.incog.tmux -e tmux a -t Configs")
 
 	-- Load the nepali date
 	hl.exec_cmd("~/sysScripts/fetchNepaliDate.sh")
