@@ -4,7 +4,7 @@ Description=Start tmux for Continuum restore
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=tmux new-session -d
+ExecStart=/usr/bin/bash -c 'tmux info &>/dev/null || tmux new-session -d'
 
 [Install]
 WantedBy=default.target
