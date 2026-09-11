@@ -1,12 +1,12 @@
-vim.opt.number = true         -- Make line numbers default (default: false)
+vim.opt.number = true -- Make line numbers default (default: false)
 vim.opt.relativenumber = true -- Set relative numbered lines (default: false)
 
 -- Sync clipboard between OS and Neovim. (default: '')
 vim.opt.clipboard = 'unnamedplus'
 
-vim.opt.wrap = true      -- Display lines as one long line (default: true)
+vim.opt.wrap = true -- Display lines as one long line (default: true)
 vim.opt.linebreak = true -- Companion to wrap, don't split words (default: false)
-vim.opt.mouse = 'nv'     -- Enable mouse mode (default: '')
+vim.opt.mouse = 'nv' -- Enable mouse mode (default: '')
 vim.opt.autoindent = true -- Copy indent from current line when starting new one (default: true)
 
 -- Case related options
@@ -27,7 +27,7 @@ vim.opt.hlsearch = false
 vim.opt.cursorline = true -- Highlight the current line
 
 vim.opt.showmode = false
-vim.opt.termguicolors = true   -- Set termguicolors to enable highlight groups (default: false)
+vim.opt.termguicolors = true -- Set termguicolors to enable highlight groups (default: false)
 vim.opt.whichwrap = 'bs<>[]hl' -- Which "horizontal" keys are allowed to travel to prev/next line (default: 'b,s')
 vim.opt.numberwidth = 4
 vim.opt.smartindent = true
@@ -47,10 +47,14 @@ vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.undofile = true
 
-vim.opt.shortmess:append 'c'                         -- Don't give |ins-completion-menu| messages (default: does not include 'c')
-vim.opt.iskeyword:append '-'                         -- Hyphenated words recognized by searches (default: does not include '-')
-vim.opt.formatoptions:remove { 'c', 'r', 'o' }       -- Don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode. (default: 'croql')
+vim.opt.shortmess:append 'c' -- Don't give |ins-completion-menu| messages (default: does not include 'c')
+vim.opt.iskeyword:append '-' -- Hyphenated words recognized by searches (default: does not include '-')
+vim.opt.formatoptions:remove { 'c', 'r', 'o' } -- Don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode. (default: 'croql')
 vim.opt.runtimepath:remove '/usr/share/vim/vimfiles' -- Separate Vim plugins from Neovim in case Vim still in use (default: includes this path if Vim is installed)
 
 -- Sync changes to the file outside of neovim
 vim.opt.autoread = true
+
+-- Skip netrw entirely; mini.files is the file explorer (bound to - and _)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
