@@ -54,3 +54,7 @@ vim.opt.runtimepath:remove '/usr/share/vim/vimfiles' -- Separate Vim plugins fro
 
 -- Sync changes to the file outside of neovim
 vim.opt.autoread = true
+
+-- Skip netrw entirely; mini.files is the file explorer (bound to - and _)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
