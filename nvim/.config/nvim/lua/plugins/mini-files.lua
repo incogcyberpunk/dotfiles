@@ -1,11 +1,8 @@
 return {
   'echasnovski/mini.files',
   enabled = true,
-  -- mini.icons supplies the file/folder glyphs shown in the explorer.
   dependencies = { { 'echasnovski/mini.icons', opts = {} } },
 
-  -- Lazy-load: the plugin is only pulled in the first time one of these keys
-  -- is pressed, so it adds nothing to startup time.
   keys = {
     {
       '-',
@@ -30,8 +27,8 @@ return {
 
   opts = {
     windows = {
-      preview = true, -- show a preview of the entry under the cursor
-      width_preview = 40, -- width (in columns) of that preview window
+      preview = true,
+      width_preview = 40,
     },
     mappings = {
       -- Use the stock l/h for go_in/go_out; only override go_in_plus.
