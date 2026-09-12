@@ -1,0 +1,98 @@
+## tuigreet config -- read from /etc/tuigreet/config.toml
+##
+## Deployed via stow:  cd ~/dotfiles && sudo stow -t / tuigreet
+##
+## NOTE: this must live in /etc, not ~/.config. The greeter runs as user
+## `greeter` (uid 941, home `/`), and tuigreet only reads
+## $XDG_CONFIG_HOME/tuigreet/config.toml -- with no $HOME/.config fallback --
+## so a config under /home/incog is never seen by the greeter.
+##
+## Validate changes without logging out:
+##   tuigreet --config etc/tuigreet/config.toml --dump-config
+## Preview the UI live:
+##   tuigreet --config etc/tuigreet/config.toml --mock
+
+[display]
+show_time = true
+greeting = "Welcome to the system!"
+align_greeting = "center"
+issue = false
+
+[layout]
+width = 60
+window_padding = 2
+container_padding = 1
+prompt_padding = 1
+
+[layout.widgets]
+time_position = "top"
+status_position = "bottom"
+
+# The status bar already shows a CAPS LOCK indicator by default, which is worth
+# having since keyd remaps capslock to overload(control, esc). No config needed;
+# if you ever want to disable parts of it the section is [layout.widgets.status_bar]
+# -- note that tuigreet silently ignores misnested sections rather than erroring.
+
+[secret]
+# "hidden" gives no keystroke feedback at all, which is deliberate: the
+# "characters" mode emits one glyph per character and so discloses password
+# length to anyone glancing at the screen. There is no middle ground in this
+# build -- the only accepted values are "hidden" and "characters", and
+# --asterisks-char merely randomises the glyph while still emitting one per
+# keystroke.
+mode = "hidden"
+
+[remember]
+username = true
+# Both left false on purpose. `user_session` would let a remembered session
+# selection override `--cmd start-hyprland` from greetd's config, silently
+# swapping the launch path for hyprland.desktop or hyprland-uwsm.desktop.
+session = false
+user_session = false
+
+[user_menu]
+enabled = true
+min_uid = 1000
+max_uid = 60000
+
+[session]
+sessions_dirs = ["/usr/share/wayland-sessions", "/usr/share/xsessions"]
+xsessions_dirs = []
+environments = []
+
+[power]
+# setsid detaches power commands from the greeter's TTY. Without it the binary
+# warns that shutdown/reboot "may fail" for the unprivileged greeter user.
+# If F12 actions still fail, set explicit commands to match the old sddm setup:
+#   shutdown = "systemctl poweroff"
+#   reboot   = "systemctl reboot"
+use_setsid = true
+
+[keybindings]
+command = 2     # F2  - edit launch command
+sessions = 3    # F3  - session picker
+background = 4  # F4  - switch backdrop
+power = 12      # F12 - power menu
+
+[background]
+kind = "doom"
+fps = 30
+
+[background.doom]
+height = 6
+spread = 2
+top_color = "#9F2707"
+middle_color = "#C78F17"
+bottom_color = "#FFFFFF"
+
+[theme]
+border = "white"
+text = "green"
+time = "blue"
+container = "black"
+title = "cyan"
+greet = "yellow"
+prompt = "magenta"
+input = "white"
+action = "bright-blue"
+button = "bright-red"
