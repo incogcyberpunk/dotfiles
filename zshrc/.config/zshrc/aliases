@@ -63,7 +63,9 @@ alias tb='nc termbin.com 9999'
 alias acpu='auto-cpufreq'
 
 # Get nepali date
-alias nepdate='~/sysScripts/fetchNepaliDate.sh'
+alias nepdate='~/github/nepaliPatro/patro --today'
+# Open the calendar popup
+alias patro='~/github/nepaliPatro/patro'
 
 # Run the spotx-bash script
 alias spotx="bash <(curl -sSL https://spotx-official.github.io/run.sh) -f"

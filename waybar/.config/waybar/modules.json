@@ -105,6 +105,7 @@
     // No hover tooltip: it floated over the nepaliPatro popup the click opens.
     "tooltip": false,
     "on-click": "~/github/nepaliPatro/patro",
+    "on-click-right": "~/github/nepaliPatro/patro --notify",
   },
   "group/middle": {
     "orientation": "horizontal",
