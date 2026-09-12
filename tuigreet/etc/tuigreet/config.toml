@@ -1,0 +1,72 @@
+[display]
+show_time = true
+greeting = "Welcome to the system!"
+align_greeting = "center"
+issue = false
+
+[layout]
+width = 60
+window_padding = 2
+container_padding = 1
+prompt_padding = 1
+
+[layout.widgets]
+time_position = "top"
+status_position = "bottom"
+
+[secret]
+mode = "hidden"
+
+[remember]
+username = true
+session = false
+user_session = false
+
+[user_menu]
+enabled = true
+min_uid = 1000
+max_uid = 60000
+
+[session]
+sessions_dirs = ["/usr/share/wayland-sessions", "/usr/share/xsessions"]
+xsessions_dirs = []
+environments = []
+
+[power]
+use_setsid = true
+
+[keybindings]
+command = 2     # F2  - edit launch command
+sessions = 3    # F3  - session picker
+background = 4  # F4  - switch backdrop
+power = 12      # F12 - power menu
+
+[background]
+# kind = "doom"
+# fps = 30
+
+[background.doom]
+# Inert while [background] kind is commented out above. Recoloured to Mocha so
+# it matches if you re-enable it (F4 also switches backdrops at runtime).
+# bottom is the hottest band.
+height = 6
+spread = 2
+top_color = "#f38ba8"     # red
+middle_color = "#fab387"  # peach
+bottom_color = "#f5e0dc"  # rosewater
+
+[theme]
+# Catppuccin Mocha. NOTE: the greeter runs on the Linux virtual console, which
+# has a 16-colour palette -- the kernel approximates these 24-bit values to the
+# nearest slot, so expect close-but-not-exact hues. For true Mocha on the TTY,
+# reprogram the console palette itself with setvtrgb(8) and these become exact.
+border = "#89b4fa"      # blue
+text = "#cdd6f4"        # text
+time = "#89dceb"        # sky
+container = "#1e1e2e"   # base
+title = "#cba6f7"       # mauve
+greet = "#b4befe"       # lavender
+prompt = "#94e2d5"      # teal
+input = "#cdd6f4"       # text
+action = "#fab387"      # peach
+button = "#f38ba8"      # red
