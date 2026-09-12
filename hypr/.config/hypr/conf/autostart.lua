@@ -41,7 +41,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("ghostty --class=dev.incog.tmux -e tmux a -t Configs")
 
 	-- Load the nepali date
-	hl.exec_cmd("~/sysScripts/fetchNepaliDate.sh")
+	hl.exec_cmd("~/github/nepaliPatro/patro --notify")
 end)
 
 hl.on("workspace.move_to_monitor", function(ws, m)
