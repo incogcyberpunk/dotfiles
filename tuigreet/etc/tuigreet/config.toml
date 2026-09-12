@@ -3,9 +3,12 @@
 ## Deployed via stow:  cd ~/dotfiles && sudo stow -t / tuigreet
 ##
 ## NOTE: this must live in /etc, not ~/.config. The greeter runs as user
-## `greeter` (uid 941, home `/`), and tuigreet only reads
-## $XDG_CONFIG_HOME/tuigreet/config.toml -- with no $HOME/.config fallback --
-## so a config under /home/incog is never seen by the greeter.
+## `greeter` (uid 941), whose home is `/` -- so `~/.config` resolves to
+## /.config/tuigreet/config.toml, never /home/incog/.config. tuigreet does read
+## $XDG_CONFIG_HOME/tuigreet/config.toml and falls back to $HOME/.config, but
+## both resolve against the *greeter's* environment, not yours. Pointing it at
+## your home would need XDG_CONFIG_HOME or HOME injected into greetd's command
+## plus /home/incog staying world-traversable.
 ##
 ## Validate changes without logging out:
 ##   tuigreet --config etc/tuigreet/config.toml --dump-config
