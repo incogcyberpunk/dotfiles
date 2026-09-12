@@ -1,14 +1,22 @@
-## tuigreet config -- read from /etc/tuigreet/config.toml
+## tuigreet config -- lives at ~/.config/tuigreet/config.toml
 ##
-## Deployed via stow:  cd ~/dotfiles && sudo stow -t / tuigreet
+## Deployed via stow (no root needed):  cd ~/dotfiles && stow tuigreet
 ##
-## NOTE: this must live in /etc, not ~/.config. The greeter runs as user
-## `greeter` (uid 941), whose home is `/` -- so `~/.config` resolves to
-## /.config/tuigreet/config.toml, never /home/incog/.config. tuigreet does read
-## $XDG_CONFIG_HOME/tuigreet/config.toml and falls back to $HOME/.config, but
-## both resolve against the *greeter's* environment, not yours. Pointing it at
-## your home would need XDG_CONFIG_HOME or HOME injected into greetd's command
-## plus /home/incog staying world-traversable.
+## IMPORTANT: the greeter will NOT find this on its own. tuigreet looks in
+## $XDG_CONFIG_HOME (or $HOME/.config) resolved against the *greeter's* own
+## environment, and the greeter runs as user `greeter` whose home is `/` --
+## so unaided it would check /.config/tuigreet/config.toml, not this file.
+## /etc/greetd/config.toml must point at it explicitly:
+##
+##   command = "tuigreet --config /home/incog/.config/tuigreet/config.toml --cmd start-hyprland"
+##
+## That works because /home, /home/incog and ~/.config are all world-traversable
+## (o+rx) and this file is o+r, which the unprivileged greeter needs. If you ever
+## `chmod 700 ~`, the greeter silently loses this config and falls back to
+## built-in defaults -- no error, just a different-looking login screen.
+##
+## Validate without logging out:  tuigreet --config ~/.config/tuigreet/config.toml --dump-config
+## Preview the UI live:           tuigreet --config ~/.config/tuigreet/config.toml --mock
 ##
 ## Validate changes without logging out:
 ##   tuigreet --config etc/tuigreet/config.toml --dump-config
