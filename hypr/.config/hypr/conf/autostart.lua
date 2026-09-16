@@ -42,6 +42,9 @@ hl.on("hyprland.start", function()
 
 	-- Load the nepali date
 	hl.exec_cmd("~/github/nepaliPatro/patro --notify")
+
+	-- Start dynamic cursors plugin
+	hl.exec_cmd("hyprpm reload ")
 end)
 
 hl.on("workspace.move_to_monitor", function(ws, m)
