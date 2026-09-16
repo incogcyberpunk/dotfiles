@@ -23,7 +23,13 @@ session = false
 user_session = false
 
 [user_menu]
-enabled = true
+# MUST stay false while [remember] username = true. tuigreet 0.11 fires two
+# independent CreateSession requests at startup (main.rs: one for the
+# remembered user, one for "auto-select sole eligible user"). greetd rejects
+# the second with "a session is already being configured", tuigreet reports
+# "An error was received from greetd" and resets to the user menu. Since this
+# box has exactly one user in the UID range, both branches always triggered.
+enabled = false
 min_uid = 1000
 max_uid = 60000
 
