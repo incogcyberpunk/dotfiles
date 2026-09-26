@@ -23,7 +23,7 @@ new_macro _Yellow set_select_highlight_type(y);add_highlight(y)
 
 `set_select_highlight_type` **pins** the color as current, then `add_highlight`
 applies it. That's what reproduces pdf.js remembering your last swatch — after
-picking once, `<C-h>` reuses it and `ah` auto-highlights everything you select.
+picking once, `<C-H>` reuses it and `ah` auto-highlights everything you select.
 
 The seven colors match pdf.js's five built-in swatches (`highlightEditorColors`)
 plus orange and purple. They live in `highlight_color_{y,g,b,p,r,o,u}` and are
@@ -40,8 +40,8 @@ Faster than the menu once you know the letters. Select text, then:
 
 | | |
 |---|---|
-| `<C-h>` | highlight with the pinned color |
-| `<C-H>` + letter | pin a color without highlighting |
+| `<C-H>` | highlight with the pinned color |
+| `<C-h>` + letter | pin a color without highlighting |
 | `ah` | auto-highlight every mouse selection |
 | `gnh` / `gNh` | next / previous highlight |
 | `<A-e>` | bake highlights into a real PDF any reader can open |
