@@ -81,10 +81,11 @@ hl.gesture({
 -- ║ Pinch Gestures — Zoom & Resize                                 ║
 -- ╚══════════════════════════════════════════════════════════════════╝
 
--- 2-finger pinch for live cursor zoom (smooth, continuous)
+-- SUPER + 2-finger pinch for live system zoom (bare pinch stays with apps)
 hl.gesture({
 	fingers = 2,
 	direction = "pinch",
+	mods = "SUPER",
 	action = "cursor_zoom",
 	zoom_level = 1,
 	mode = "live",
