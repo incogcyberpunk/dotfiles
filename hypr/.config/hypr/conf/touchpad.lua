@@ -8,7 +8,7 @@ hl.config({
             middle_button_emulation = true,
             scroll_factor = 1.0,
             drag_lock = 0,
-            drag_3fg = 1
+            drag_3fg = 0 -- off: 3fg drag swallows the 3-finger swipe/pinch gestures
         }
     }
 })
