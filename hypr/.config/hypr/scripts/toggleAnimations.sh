@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# A manual toggle takes ownership from the automatic battery profile.
+rm -f "${XDG_RUNTIME_DIR:-/run/user/$UID}/battery-profile-user/animations-disabled"
+
 animationsState=$(hyprctl getoption animations.enabled | head -n 1 | awk '{print $2}')
 
 if $animationsState; then
