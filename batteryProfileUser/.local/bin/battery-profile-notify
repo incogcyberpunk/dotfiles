@@ -1,0 +1,238 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+PROGRAM=${0##*/}
+ROOT_STATE_DIR=${BP_ROOT_STATE_DIR:-/run/battery-profile}
+USER_STATE_DIR=${BP_USER_STATE_DIR:-${XDG_RUNTIME_DIR:-/tmp}/battery-profile-user}
+NOTIFY_SEND=${BP_NOTIFY_SEND:-notify-send}
+HYPRCTL=${BP_HYPRCTL:-hyprctl}
+
+log() { printf '%s: %s\n' "$PROGRAM" "$*"; }
+warn() { printf '%s: warning: %s\n' "$PROGRAM" "$*" >&2; }
+
+read_power_state() {
+    if [[ -n ${BP_POWER_STATE:-} ]]; then
+        case "$BP_POWER_STATE" in ac|battery) printf '%s\n' "$BP_POWER_STATE"; return 0;; esac
+    fi
+    local supply type online found=0
+    for supply in /sys/class/power_supply/*; do
+        [[ -r $supply/type && -r $supply/online ]] || continue
+        read -r type <"$supply/type" || continue
+        [[ $type == Mains ]] || continue
+        found=1
+        read -r online <"$supply/online" || continue
+        [[ $online == 1 ]] && { printf 'ac\n'; return 0; }
+    done
+    if (( found )); then
+        printf 'battery\n'
+    else
+        printf 'unknown\n'
+        return 1
+    fi
+}
+
+process_running() {
+    local expression=$1
+    if [[ -n ${BP_TEST_PROCESS_LIST:-} ]]; then
+        grep -Eiq -- "$expression" <<<"$BP_TEST_PROCESS_LIST"
+    else
+        pgrep -afi -- "$expression" >/dev/null 2>&1
+    fi
+}
+
+active_apps() {
+    local -a apps=()
+    process_running '(/|^)zen(-browser|-bin)?([[:space:]]|$)' && apps+=(Zen)
+    process_running '(/|^)brave(-origin)?([[:space:]]|$)' && apps+=(Brave)
+    process_running '(/|^)spotify([[:space:]]|$)' && apps+=(Spotify)
+    process_running '(/|^)(electron|equibop)([[:space:]]|$)' && apps+=(Electron)
+    process_running '(/|^)(node|bun)([[:space:]]|$)' && apps+=(Node/Bun)
+    if (( ${#apps[@]} == 0 )); then
+        printf 'none detected'
+        return
+    fi
+    local joined=${apps[0]} item
+    for item in "${apps[@]:1}"; do joined+=", $item"; done
+    printf '%s' "$joined"
+}
+
+file_list() {
+    local file=$1 fallback=$2
+    if [[ -s $ROOT_STATE_DIR/$file ]]; then
+        paste -sd ', ' "$ROOT_STATE_DIR/$file"
+    else
+        printf '%s' "$fallback"
+    fi
+}
+
+# Same calls as hypr/scripts/toggleAnimations.sh (SUPER+SHIFT+A), minus its
+# brightness and sticky notification. The flag file is read by
+# hypr/conf/batteryProfile.lua so config reloads keep animations off, and the
+# toggle script deletes it so a manual toggle always wins.
+animation_flag() { printf '%s/animations-disabled' "$USER_STATE_DIR"; }
+
+set_animations() {
+    "$HYPRCTL" eval "hl.config({animations = {enabled = $1}})" >/dev/null &&
+        "$HYPRCTL" eval "hl.config({decoration = {blur = {enabled = $1}}})" >/dev/null
+}
+
+disable_animations_for_battery() {
+    local enabled
+    enabled=$("$HYPRCTL" getoption animations.enabled 2>/dev/null | awk 'NR == 1 {print $2}')
+    [[ $enabled == true ]] || return 1
+    if ! set_animations false; then
+        warn 'failed to disable animations'
+        return 1
+    fi
+    : >"$(animation_flag)"
+}
+
+restore_animations() {
+    [[ -e $(animation_flag) ]] || return 0
+    if set_animations true; then
+        rm -f -- "$(animation_flag)"
+    else
+        warn 'failed to restore animations; will retry on next AC event'
+    fi
+}
+
+restart_idle_policy() {
+    if systemctl --user is-active --quiet hypridle.service; then
+        systemctl --user restart hypridle.service || warn 'failed to restart hypridle'
+    else
+        systemctl --user start hypridle.service || warn 'failed to start hypridle'
+    fi
+}
+
+send_battery_notification() {
+    local animations=$1 urgency=normal stopped preserved apps body
+    stopped=$(file_list changed-units 'no optional services')
+    preserved=$(file_list preserved 'none')
+    apps=$(active_apps)
+    [[ -e $ROOT_STATE_DIR/docker-warning ]] && urgency=critical
+
+    body="Wi-Fi power saving: enabled
+Display: battery idle policy active
+Animations/blur: $animations
+Stopped: $stopped
+Preserved: $preserved
+Active apps: $apps"
+    [[ $urgency == critical ]] && body+=$'\nDocker remains active. Close its containers to save battery.'
+
+    "$NOTIFY_SEND" -u "$urgency" -a 'Battery Profile' \
+        -h string:x-canonical-private-synchronous:battery-profile \
+        -i battery-caution 'Battery-saving profile enabled' "$body"
+}
+
+send_ac_notification() {
+    "$NOTIFY_SEND" -u normal -a 'Battery Profile' \
+        -h string:x-canonical-private-synchronous:battery-profile \
+        -t 5000 -i battery-good-charging 'AC profile restored' \
+        'Normal CPU, Wi-Fi, display, animations, Bluetooth, and profile-managed services were restored.'
+}
+
+apply_transition() {
+    local state=$1 last_file=$USER_STATE_DIR/last-power last=''
+    install -d -m 0700 "$USER_STATE_DIR"
+    [[ -r $last_file ]] && read -r last <"$last_file"
+    [[ $last == "$state" ]] && return 0
+    printf '%s\n' "$state" >"$last_file"
+
+    # Give the privileged controller a moment to publish its action summary.
+    sleep "${BP_SETTLE_SECONDS:-1}"
+    restart_idle_policy
+    if [[ $state == battery ]]; then
+        local animations='already off'
+        disable_animations_for_battery && animations='disabled'
+        send_battery_notification "$animations"
+    else
+        restore_animations
+        send_ac_notification
+    fi
+}
+
+apply_current() {
+    local state
+    state=$(read_power_state) || { warn 'no AC adapter state is available'; return 0; }
+    apply_transition "$state"
+}
+
+monitor() {
+    apply_current
+    command -v upower >/dev/null 2>&1 || { warn 'upower is required'; return 1; }
+    stdbuf -oL upower --monitor | while IFS= read -r _; do apply_current; done
+}
+
+self_test() {
+    local tmp output failures=0
+    tmp=$(mktemp -d)
+    USER_STATE_DIR=$tmp/user
+    ROOT_STATE_DIR=$tmp/root
+    install -d "$USER_STATE_DIR" "$ROOT_STATE_DIR"
+
+    assert_eq() {
+        local expected=$1 actual=$2 label=$3
+        if [[ $expected == "$actual" ]]; then printf 'ok - %s\n' "$label"; else printf 'not ok - %s (expected %s, got %s)\n' "$label" "$expected" "$actual"; failures=$((failures + 1)); fi
+    }
+
+    assert_eq battery "$(BP_POWER_STATE=battery read_power_state)" 'simulated battery state'
+    assert_eq ac "$(BP_POWER_STATE=ac read_power_state)" 'simulated AC state'
+    output=$(BP_TEST_PROCESS_LIST=$'/opt/zen-browser-bin/zen-bin\n/usr/bin/spotify\n/usr/bin/node app.js' active_apps)
+    assert_eq 'Zen, Spotify, Node/Bun' "$output" 'active application summary'
+
+    printf 'docker.service\n' >"$ROOT_STATE_DIR/changed-units"
+    printf 'Docker: running containers\n' >"$ROOT_STATE_DIR/preserved"
+    printf 'running containers\n' >"$ROOT_STATE_DIR/docker-warning"
+    assert_eq 'docker.service' "$(file_list changed-units none)" 'stopped service summary'
+    assert_eq 'Docker: running containers' "$(file_list preserved none)" 'preserved workload summary'
+
+    printf 'battery\n' >"$USER_STATE_DIR/last-power"
+    local before after
+    before=$(stat -c %Y "$USER_STATE_DIR/last-power")
+    BP_SETTLE_SECONDS=0 apply_transition battery >/dev/null
+    after=$(stat -c %Y "$USER_STATE_DIR/last-power")
+    assert_eq "$before" "$after" 'duplicate transition suppression'
+
+    # Animations: fake hyprctl records calls and reports a configurable state.
+    local fake=$tmp/hyprctl
+    cat >"$fake" <<'EOF'
+#!/usr/bin/env bash
+if [[ $1 == getoption ]]; then printf 'bool: %s\nset: true\n' "$(cat "$FAKE_STATE")"; exit 0; fi
+printf '%s\n' "$2" >>"$FAKE_LOG"
+[[ $2 == *'animations = {enabled = true}'* ]] && echo true >"$FAKE_STATE"
+[[ $2 == *'animations = {enabled = false}'* ]] && echo false >"$FAKE_STATE"
+exit 0
+EOF
+    chmod +x "$fake"
+    export FAKE_STATE=$tmp/anim-state FAKE_LOG=$tmp/anim-log
+    HYPRCTL=$fake
+
+    echo true >"$FAKE_STATE"
+    disable_animations_for_battery
+    assert_eq false "$(cat "$FAKE_STATE")" 'battery disables enabled animations'
+    assert_eq 2 "$(wc -l <"$FAKE_LOG")" 'animations and blur both disabled'
+    if [[ -e $(animation_flag) ]]; then printf 'ok - reload flag written\n'; else printf 'not ok - reload flag written\n'; failures=$((failures + 1)); fi
+    restore_animations
+    assert_eq true "$(cat "$FAKE_STATE")" 'AC restores profile-disabled animations'
+    if [[ ! -e $(animation_flag) ]]; then printf 'ok - reload flag cleared\n'; else printf 'not ok - reload flag cleared\n'; failures=$((failures + 1)); fi
+
+    # User already turned animations off with SUPER+SHIFT+A: leave them alone.
+    echo false >"$FAKE_STATE"; : >"$FAKE_LOG"
+    if disable_animations_for_battery; then printf 'not ok - manual off left alone\n'; failures=$((failures + 1)); else printf 'ok - manual off left alone\n'; fi
+    restore_animations
+    assert_eq false "$(cat "$FAKE_STATE")" 'AC does not enable user-disabled animations'
+    assert_eq 0 "$(wc -l <"$FAKE_LOG")" 'no hyprctl writes for user-owned state'
+
+    rm -rf -- "$tmp"
+    if (( failures )); then printf '%d self-test(s) failed\n' "$failures"; return 1; fi
+    printf 'all self-tests passed\n'
+}
+
+usage() { printf 'Usage: %s monitor|apply-current|self-test\n' "$PROGRAM"; }
+
+case ${1:-} in
+    monitor) monitor ;;
+    apply-current) rm -f -- "$USER_STATE_DIR/last-power"; apply_current ;;
+    self-test) self_test ;;
+    *) usage; exit 2 ;;
+esac
