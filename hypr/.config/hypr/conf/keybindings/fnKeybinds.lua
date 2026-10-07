@@ -20,7 +20,7 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(scripts .. "/changeBrightness.s
 hl.bind("F8", hl.dsp.exec_cmd(scripts .. "/lockscreen.sh"), { locked = true })
 hl.bind("XF86ScreenSaver", hl.dsp.exec_cmd(scripts .. "/lockscreen.sh"), { locked = true })
 
-hl.bind("F9", hl.dsp.exec_cmd(scripts .. "/toggleFlightMode.sh"), { locked = true })
-hl.bind("XF86RFKill", hl.dsp.exec_cmd(scripts .. "/toggleFlightMode.sh"), { locked = true })
+hl.bind("F9", hl.dsp.exec_cmd("~/sysScripts/toggleFlightMode.sh"), { locked = true })
+hl.bind("XF86RFKill", hl.dsp.exec_cmd("~/sysScripts/toggleFlightMode.sh"), { locked = true })
 
 hl.bind("code:76", hl.dsp.exec_cmd(scripts .. "/toggleTouchpad.sh"), { locked = true })
