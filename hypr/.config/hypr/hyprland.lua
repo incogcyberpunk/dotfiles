@@ -54,3 +54,6 @@ require("conf.permissions")
 
 -- Gestures
 require("conf.gestures")
+
+-- Battery profile overrides (must load last)
+require("conf.batteryProfile")

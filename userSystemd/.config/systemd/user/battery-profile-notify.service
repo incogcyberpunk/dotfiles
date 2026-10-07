@@ -1,0 +1,13 @@
+[Unit]
+Description=Battery profile desktop notifications and idle-policy switching
+After=hyprland-session.target
+PartOf=hyprland-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/battery-profile-notify monitor
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=hyprland-session.target

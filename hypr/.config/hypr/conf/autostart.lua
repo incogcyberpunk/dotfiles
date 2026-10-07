@@ -29,9 +29,9 @@ hl.on("hyprland.start", function()
 	-- Equibop
 	hl.exec_cmd("equibop")
 
-	-- Launch hyprsunset and hypridle
+	-- Launch hyprsunset and the systemd-managed idle daemon
 	hl.exec_cmd("hyprsunset")
-	hl.exec_cmd("hypridle")
+	hl.exec_cmd("systemctl --user start hypridle.service")
 
 	-- Setup cliphist to store images and text
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")

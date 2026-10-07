@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+power_state=ac
+for supply in /sys/class/power_supply/*; do
+    [[ -r $supply/type && -r $supply/online ]] || continue
+    read -r type <"$supply/type" || continue
+    [[ $type == Mains ]] || continue
+    read -r online <"$supply/online" || continue
+    [[ $online == 0 ]] && power_state=battery || power_state=ac
+    [[ $online == 1 ]] && break
+done
+
+config=${XDG_CONFIG_HOME:-$HOME/.config}/hypr/hypridle.conf
+[[ $power_state == battery ]] && config=${XDG_DATA_HOME:-$HOME/.local/share}/battery-profile/hypridle-battery.conf
+exec /usr/bin/hypridle --config "$config"
