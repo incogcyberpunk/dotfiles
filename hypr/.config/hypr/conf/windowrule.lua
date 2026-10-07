@@ -65,11 +65,11 @@ hl.layer_rule({
 	above_lock = 1,
 })
 
--- Float the QR code generated using clipboardQR.sh script
+-- Float the QR code popup from ~/sysScripts/showQR.sh
 hl.window_rule({
-	name = "clipboardQR-float",
+	name = "showQR-float",
 	match = {
-		class = "qr.cliboard",
+		class = "qr.popup",
 	},
 	float = true,
 	size = { 300, 500 },
