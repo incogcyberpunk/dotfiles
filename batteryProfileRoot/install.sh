@@ -37,7 +37,9 @@ install_file 0644 etc/NetworkManager/NetworkManager.conf /etc/NetworkManager/Net
 install_file 0644 etc/auto-cpufreq.conf /etc/auto-cpufreq.conf
 install_file 0644 usr/local/share/doc/battery-profile/README.md /usr/local/share/doc/battery-profile/README.md
 install_file 0644 usr/local/share/battery-profile/auto_tab_discard-0.7.5.xpi /usr/local/share/battery-profile/auto_tab_discard-0.7.5.xpi
-install_file 0644 opt/zen-browser-bin/distribution/policies.json /opt/zen-browser-bin/distribution/policies.json
+# /etc/zen/policies is read instead of the package-owned distribution file, so
+# zen-browser-bin updates cannot overwrite it. It keeps the package's own policies.
+install_file 0644 etc/zen/policies/policies.json /etc/zen/policies/policies.json
 
 systemd-analyze verify /etc/systemd/system/battery-profile.service /etc/systemd/system/battery-profile-wifi.service
 /usr/local/libexec/battery-profile self-test

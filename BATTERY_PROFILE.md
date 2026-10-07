@@ -2,7 +2,7 @@
 
 The implementation is split into two packages:
 
-- `batteryProfileRoot/`: privileged UPower controller, Wi-Fi hooks, CPU/network settings, and Zen enterprise policy.
+- `batteryProfileRoot/`: privileged UPower controller, Wi-Fi hooks, CPU/network settings, and Zen enterprise policy (`/etc/zen/policies`, safe from package updates).
 - `batteryProfileUser/`: Hypridle selector, desktop notifier, and browser preference setup.
 
 Install the user layer first:
