@@ -1,0 +1,3 @@
+# Reapply manager-independent Wi-Fi policy when a wireless interface appears.
+ACTION=="add", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", TAG+="systemd", ENV{SYSTEMD_WANTS}+="battery-profile-wifi.service"
+ACTION=="move", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", TAG+="systemd", ENV{SYSTEMD_WANTS}+="battery-profile-wifi.service"

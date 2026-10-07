@@ -1,0 +1,458 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+PROGRAM=${0##*/}
+STATE_DIR=${BP_STATE_DIR:-/run/battery-profile}
+POWER_SUPPLY_DIR=${BP_POWER_SUPPLY_DIR:-/sys/class/power_supply}
+BACKLIGHT_DIR=${BP_BACKLIGHT_DIR:-/sys/class/backlight/intel_backlight}
+DRY_RUN=${BP_DRY_RUN:-0}
+FORCE=${BP_FORCE:-0}
+
+log() { printf '%s: %s\n' "$PROGRAM" "$*"; }
+warn() { printf '%s: warning: %s\n' "$PROGRAM" "$*" >&2; }
+
+ensure_state_dir() {
+    (( DRY_RUN )) && return 0
+    install -d -m 0755 "$STATE_DIR"
+}
+
+state_path() { printf '%s/%s' "$STATE_DIR" "$1"; }
+state_exists() { [[ -e $(state_path "$1") ]]; }
+state_read() { [[ -r $(state_path "$1") ]] && cat "$(state_path "$1")" || true; }
+state_write() {
+    if (( DRY_RUN )); then
+        log "would record $1=$2"
+    else
+        printf '%s\n' "$2" >"$(state_path "$1")"
+        chmod 0644 "$(state_path "$1")"
+    fi
+}
+state_remove() {
+    if (( DRY_RUN )); then
+        log "would clear $1"
+    else
+        rm -f -- "$(state_path "$1")"
+    fi
+}
+record_line() {
+    local file=$1 value=$2 path
+    path=$(state_path "$file")
+    if (( DRY_RUN )); then
+        log "would record $file: $value"
+    elif ! grep -Fxq -- "$value" "$path" 2>/dev/null; then
+        printf '%s\n' "$value" >>"$path"
+        chmod 0644 "$path"
+    fi
+}
+
+run_optional() {
+    local description=$1
+    shift
+    if (( DRY_RUN )); then
+        printf '  - %s:' "$description"
+        printf ' %q' "$@"
+        printf '\n'
+        return 0
+    fi
+    if "$@"; then
+        return 0
+    fi
+    warn "$description failed; continuing"
+    return 1
+}
+
+read_power_state() {
+    if [[ -n ${BP_POWER_STATE:-} ]]; then
+        case "$BP_POWER_STATE" in ac|battery) printf '%s\n' "$BP_POWER_STATE"; return 0;; esac
+    fi
+
+    local supply type online found=0
+    [[ -d $POWER_SUPPLY_DIR ]] || { printf 'unknown\n'; return 1; }
+    for supply in "$POWER_SUPPLY_DIR"/*; do
+        [[ -r $supply/type && -r $supply/online ]] || continue
+        read -r type <"$supply/type" || continue
+        [[ $type == Mains ]] || continue
+        found=1
+        read -r online <"$supply/online" || continue
+        if [[ $online == 1 ]]; then
+            printf 'ac\n'
+            return 0
+        fi
+    done
+    if (( found )); then printf 'battery\n'; else printf 'unknown\n'; return 1; fi
+}
+
+transition_needed() {
+    local desired=$1 last
+    (( FORCE )) && return 0
+    last=$(state_read last-power)
+    [[ $last != "$desired" ]] && return 0
+    if [[ $desired == ac ]] && { state_exists changed-units || state_exists bluetooth-powered-off || state_exists brightness-previous; }; then
+        return 0
+    fi
+    return 1
+}
+
+wireless_interfaces() {
+    local path found=0
+    for path in /sys/class/net/*/wireless; do
+        [[ -d $path ]] || continue
+        basename "$(dirname "$path")"
+        found=1
+    done
+    if (( ! found )) && command -v iw >/dev/null 2>&1; then
+        iw dev 2>/dev/null | awk '$1 == "Interface" { print $2 }'
+    fi
+}
+
+apply_wifi() {
+    local state=$1 iface value
+    value=off
+    [[ $state == battery ]] && value=on
+    while IFS= read -r iface; do
+        [[ -n $iface ]] || continue
+        run_optional "set Wi-Fi power saving $value on $iface" iw dev "$iface" set power_save "$value" || true
+    done < <(wireless_interfaces)
+}
+
+unit_active() { systemctl is-active --quiet "$1" 2>/dev/null; }
+
+stop_and_record() {
+    local unit=$1
+    unit_active "$unit" || return 0
+    if run_optional "stop $unit" systemctl stop "$unit"; then
+        record_line changed-units "$unit"
+    fi
+}
+
+check_docker_workload() {
+    if ! unit_active docker.service; then
+        return 1
+    fi
+    local output
+    if ! output=$(docker ps -q 2>/dev/null); then
+        record_line preserved 'Docker: status check failed'
+        state_write docker-warning 'status check failed'
+        return 0
+    fi
+    if [[ -n $output ]]; then
+        record_line preserved 'Docker: running containers'
+        state_write docker-warning 'running containers'
+        return 0
+    fi
+    return 1
+}
+
+manage_docker_battery() {
+    state_remove docker-warning
+    if check_docker_workload; then
+        log 'preserving Docker because active state could not be safely stopped'
+        return 0
+    fi
+    stop_and_record docker.socket
+    stop_and_record docker.service
+    stop_and_record containerd.service
+}
+
+cups_busy() {
+    command -v lpstat >/dev/null 2>&1 || return 0
+    local output
+    output=$(lpstat -o 2>/dev/null) || return 0
+    [[ -n $output ]]
+}
+
+libvirt_busy() {
+    command -v virsh >/dev/null 2>&1 || return 0
+    local output
+    output=$(virsh list --state-running --name 2>/dev/null) || return 0
+    [[ -n $output ]]
+}
+
+manage_services_battery() {
+    manage_docker_battery
+
+    if cups_busy; then
+        record_line preserved 'CUPS: active or status unavailable'
+    else
+        stop_and_record cups.service
+    fi
+
+    if libvirt_busy; then
+        record_line preserved 'libvirt: running VM or status unavailable'
+    else
+        stop_and_record libvirtd.service
+    fi
+
+    stop_and_record tailscaled.service
+}
+
+bluetooth_connected() {
+    command -v bluetoothctl >/dev/null 2>&1 || return 0
+    local output
+    output=$(bluetoothctl devices Connected 2>/dev/null) || return 0
+    [[ -n $output ]]
+}
+
+bluetooth_powered() {
+    bluetoothctl show 2>/dev/null | grep -q '^\s*Powered: yes$'
+}
+
+manage_bluetooth_battery() {
+    state_remove bluetooth-powered-off
+    if bluetooth_connected; then
+        record_line preserved 'Bluetooth: connected device'
+        return 0
+    fi
+    bluetooth_powered || return 0
+    if run_optional 'power Bluetooth off' bluetoothctl power off; then
+        state_write bluetooth-powered-off yes
+    fi
+}
+
+brightness_cap_raw() {
+    local maximum=$1
+    printf '%d\n' $(( maximum * 30 / 100 ))
+}
+
+write_sysfs_value() {
+    local value=$1 path=$2
+    if (( DRY_RUN )); then
+        log "would write $value to $path"
+        return 0
+    fi
+    printf '%s\n' "$value" >"$path"
+}
+
+manage_brightness_battery() {
+    [[ -r $BACKLIGHT_DIR/brightness && -r $BACKLIGHT_DIR/max_brightness ]] || return 0
+    local current maximum cap
+    read -r current <"$BACKLIGHT_DIR/brightness" || return 0
+    read -r maximum <"$BACKLIGHT_DIR/max_brightness" || return 0
+    [[ $current =~ ^[0-9]+$ && $maximum =~ ^[0-9]+$ ]] || return 0
+    cap=$(brightness_cap_raw "$maximum")
+    (( current > cap )) || return 0
+
+    if run_optional 'cap display brightness at 30%' write_sysfs_value "$cap" "$BACKLIGHT_DIR/brightness"; then
+        state_write brightness-previous "$current"
+        state_write brightness-applied "$cap"
+    fi
+}
+
+restore_brightness() {
+    state_exists brightness-previous || return 0
+    [[ -r $BACKLIGHT_DIR/brightness ]] || { warn 'backlight disappeared; retaining restore state'; return 1; }
+    local current previous applied
+    read -r current <"$BACKLIGHT_DIR/brightness" || return 1
+    previous=$(state_read brightness-previous)
+    applied=$(state_read brightness-applied)
+
+    if [[ $current == "$applied" ]]; then
+        if ! run_optional 'restore display brightness' write_sysfs_value "$previous" "$BACKLIGHT_DIR/brightness"; then
+            return 1
+        fi
+    else
+        log 'brightness changed manually; not restoring the saved value'
+    fi
+    state_remove brightness-previous
+    state_remove brightness-applied
+}
+
+restore_units() {
+    local path unit failed_file
+    path=$(state_path changed-units)
+    [[ -r $path ]] || return 0
+    failed_file=$(state_path changed-units.failed)
+    (( DRY_RUN )) || : >"$failed_file"
+
+    for unit in containerd.service docker.socket docker.service cups.service libvirtd.service tailscaled.service; do
+        grep -Fxq -- "$unit" "$path" 2>/dev/null || continue
+        if ! run_optional "restore $unit" systemctl start "$unit"; then
+            (( DRY_RUN )) || printf '%s\n' "$unit" >>"$failed_file"
+        fi
+    done
+
+    if (( ! DRY_RUN )); then
+        if [[ -s $failed_file ]]; then
+            mv -f "$failed_file" "$path"
+            chmod 0644 "$path"
+        else
+            rm -f "$failed_file" "$path"
+        fi
+    fi
+}
+
+restore_bluetooth() {
+    state_exists bluetooth-powered-off || return 0
+    if run_optional 'restore Bluetooth power' bluetoothctl power on; then
+        state_remove bluetooth-powered-off
+    fi
+}
+
+apply_battery() {
+    state_remove preserved
+    manage_brightness_battery
+    apply_wifi battery
+    manage_services_battery
+    manage_bluetooth_battery
+}
+
+apply_ac() {
+    apply_wifi ac
+    restore_brightness || true
+    restore_units
+    restore_bluetooth
+    state_remove docker-warning
+    state_remove preserved
+}
+
+apply_state() {
+    local desired=$1
+    case "$desired" in ac|battery) ;; *) warn "invalid power state: $desired"; return 2;; esac
+    ensure_state_dir
+    if ! transition_needed "$desired"; then
+        return 0
+    fi
+
+    log "applying $desired profile"
+    state_write last-power "$desired"
+    if [[ $desired == battery ]]; then apply_battery; else apply_ac; fi
+}
+
+apply_current() {
+    local state
+    state=$(read_power_state) || { warn 'no AC adapter state is available'; return 0; }
+    apply_state "$state"
+}
+
+monitor() {
+    ensure_state_dir
+    FORCE=0 apply_current
+    command -v upower >/dev/null 2>&1 || { warn 'upower is required'; return 1; }
+    stdbuf -oL upower --monitor | while IFS= read -r _; do
+        FORCE=0 apply_current
+    done
+}
+
+print_file_lines() {
+    local label=$1 file=$2
+    if state_exists "$file"; then
+        printf '%s\n' "$label"
+        sed 's/^/  - /' "$(state_path "$file")"
+    fi
+}
+
+status() {
+    local state iface value current maximum
+    state=$(read_power_state 2>/dev/null || printf unknown)
+    printf 'Power source: %s\n' "$state"
+    printf 'Last applied: %s\n' "$(state_read last-power)"
+    printf 'CPU manager: auto-cpufreq (%s)\n' "$(systemctl is-active auto-cpufreq.service 2>/dev/null || true)"
+
+    while IFS= read -r iface; do
+        [[ -n $iface ]] || continue
+        value=$(iw dev "$iface" get power_save 2>/dev/null | awk -F': ' '/Power save/ {print $2}')
+        printf 'Wi-Fi %s power saving: %s\n' "$iface" "${value:-unknown}"
+    done < <(wireless_interfaces)
+
+    if [[ -r $BACKLIGHT_DIR/brightness && -r $BACKLIGHT_DIR/max_brightness ]]; then
+        read -r current <"$BACKLIGHT_DIR/brightness"
+        read -r maximum <"$BACKLIGHT_DIR/max_brightness"
+        printf 'Brightness: %d%% (%s/%s)\n' "$(( current * 100 / maximum ))" "$current" "$maximum"
+    fi
+
+    print_file_lines 'Profile-stopped units:' changed-units
+    print_file_lines 'Preserved workloads:' preserved
+    state_exists docker-warning && printf 'Docker warning: %s\n' "$(state_read docker-warning)"
+    state_exists bluetooth-powered-off && printf 'Bluetooth: powered off by profile\n'
+    printf 'SSH: unmanaged by policy (%s)\n' "$(systemctl is-active sshd.service 2>/dev/null || true)"
+
+    printf 'Existing hardware savings:\n'
+    printf '  - CPU idle: %s\n' "$(cat /sys/devices/system/cpu/cpuidle/current_driver 2>/dev/null || printf unknown)"
+    printf '  - NVMe APST latency: %s us\n' "$(cat /sys/module/nvme_core/parameters/default_ps_max_latency_us 2>/dev/null || printf unknown)"
+    printf '  - USB autosuspend: %s s\n' "$(cat /sys/module/usbcore/parameters/autosuspend 2>/dev/null || printf unknown)"
+    printf '  - Sleep mode: %s\n' "$(cat /sys/power/mem_sleep 2>/dev/null || printf unknown)"
+}
+
+self_test() {
+    local tmp failures=0 original_state_dir=$STATE_DIR original_power_dir=$POWER_SUPPLY_DIR original_backlight_dir=$BACKLIGHT_DIR
+    tmp=$(mktemp -d)
+    STATE_DIR=$tmp/state
+    install -d "$STATE_DIR"
+
+    assert_eq() {
+        local expected=$1 actual=$2 name=$3
+        if [[ $expected == "$actual" ]]; then printf 'ok - %s\n' "$name"; else printf 'not ok - %s (expected %s, got %s)\n' "$name" "$expected" "$actual"; failures=$((failures + 1)); fi
+    }
+
+    assert_eq 5760 "$(brightness_cap_raw 19200)" '30 percent brightness calculation'
+
+    BP_POWER_STATE=battery assert_eq battery "$(BP_POWER_STATE=battery read_power_state)" 'simulated battery state'
+    BP_POWER_STATE=ac assert_eq ac "$(BP_POWER_STATE=ac read_power_state)" 'simulated AC state'
+
+    POWER_SUPPLY_DIR=$tmp/missing
+    assert_eq unknown "$(read_power_state 2>/dev/null || true)" 'missing power device handling'
+    POWER_SUPPLY_DIR=$original_power_dir
+
+    state_write last-power battery
+    FORCE=0
+    if transition_needed battery; then printf 'not ok - duplicate suppression\n'; failures=$((failures + 1)); else printf 'ok - duplicate suppression\n'; fi
+    if transition_needed ac; then printf 'ok - AC transition accepted\n'; else printf 'not ok - AC transition accepted\n'; failures=$((failures + 1)); fi
+
+    BACKLIGHT_DIR=$tmp/backlight
+    install -d "$BACKLIGHT_DIR"
+    printf '100\n' >"$BACKLIGHT_DIR/brightness"
+    printf '200\n' >"$BACKLIGHT_DIR/max_brightness"
+    manage_brightness_battery
+    assert_eq 60 "$(cat "$BACKLIGHT_DIR/brightness")" 'brightness above cap is reduced'
+    assert_eq 100 "$(state_read brightness-previous)" 'previous brightness is recorded'
+    restore_brightness
+    assert_eq 100 "$(cat "$BACKLIGHT_DIR/brightness")" 'unchanged profile brightness is restored'
+
+    printf '100\n' >"$BACKLIGHT_DIR/brightness"
+    manage_brightness_battery
+    printf '70\n' >"$BACKLIGHT_DIR/brightness"
+    restore_brightness
+    assert_eq 70 "$(cat "$BACKLIGHT_DIR/brightness")" 'manual brightness change is preserved'
+    if state_exists brightness-previous; then
+        printf 'not ok - manual brightness clears restoration state\n'; failures=$((failures + 1))
+    else
+        printf 'ok - manual brightness clears restoration state\n'
+    fi
+    BACKLIGHT_DIR=$original_backlight_dir
+
+    if run_optional 'intentional optional failure' false; then
+        printf 'not ok - optional failure reporting\n'; failures=$((failures + 1))
+    else
+        printf 'ok - optional failure does not abort controller\n'
+    fi
+
+    STATE_DIR=$original_state_dir
+    rm -rf -- "$tmp"
+    if (( failures )); then
+        printf '%d self-test(s) failed\n' "$failures"
+        return 1
+    fi
+    printf 'all self-tests passed\n'
+}
+
+usage() {
+    cat <<EOF
+Usage: $PROGRAM monitor|apply-current|apply <ac|battery>|wifi|status|dry-run <ac|battery>|self-test
+EOF
+}
+
+main() {
+    local command=${1:-}
+    case "$command" in
+        monitor) monitor ;;
+        apply-current) FORCE=1; apply_current ;;
+        apply) [[ $# -eq 2 ]] || { usage; return 2; }; FORCE=1; apply_state "$2" ;;
+        wifi) FORCE=1; apply_wifi "$(read_power_state 2>/dev/null || printf ac)" ;;
+        status) status ;;
+        dry-run) [[ $# -eq 2 ]] || { usage; return 2; }; DRY_RUN=1; FORCE=1; apply_state "$2" ;;
+        self-test) DRY_RUN=0; self_test ;;
+        *) usage; return 2 ;;
+    esac
+}
+
+main "$@"

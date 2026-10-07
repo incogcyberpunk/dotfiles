@@ -1,0 +1,14 @@
+[Unit]
+Description=Apply automatic AC and battery power profiles
+Documentation=file:/usr/local/share/doc/battery-profile/README.md
+Wants=upower.service
+After=upower.service auto-cpufreq.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/libexec/battery-profile monitor
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

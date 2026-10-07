@@ -1,0 +1,7 @@
+[Unit]
+Description=Reapply current Wi-Fi power policy
+After=iwd.service NetworkManager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/libexec/battery-profile wifi

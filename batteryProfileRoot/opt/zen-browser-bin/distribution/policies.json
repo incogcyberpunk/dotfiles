@@ -1,0 +1,44 @@
+{
+  "policies": {
+    "ExtensionSettings": {
+      "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}": {
+        "installation_mode": "force_installed",
+        "install_url": "file:///usr/local/share/battery-profile/auto_tab_discard-0.7.5.xpi"
+      }
+    },
+    "Preferences": {
+      "browser.sessionstore.restore_pinned_tabs_on_demand": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.tabs.unloadOnLowMemory": {
+        "Value": true,
+        "Status": "default"
+      }
+    },
+    "3rdparty": {
+      "Extensions": {
+        "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}": {
+          "period": 600,
+          "number": 1,
+          "max.single.discard": 3,
+          "mode": "time-based",
+          "audio": true,
+          "paused": true,
+          "pinned": false,
+          "split-view": true,
+          "form": true,
+          "battery": true,
+          "online": false,
+          "idle": false,
+          "notification.permission": true,
+          "favicon": true,
+          "faqs": false,
+          "startup-unpinned": false,
+          "startup-pinned": false,
+          "startup-release-pinned": false
+        }
+      }
+    }
+  }
+}
