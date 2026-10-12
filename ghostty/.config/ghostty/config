@@ -22,3 +22,5 @@ quit-after-last-window-closed-delay = 5m
 
 window-padding-x = 0
 window-padding-balance = true
+
+copy-on-select = clipboard
