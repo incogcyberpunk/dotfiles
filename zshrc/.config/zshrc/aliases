@@ -76,3 +76,6 @@ alias no-reason="curl -s naas.isalman.dev/no | jq '.reason' "
 # Show the wifi password and generate QR code for it
 alias wifiqr="nmcli device wifi show-password"
 
+function kiro(){
+    command kiro-cli $@
+}
