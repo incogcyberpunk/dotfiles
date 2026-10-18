@@ -27,6 +27,7 @@ user_session = false
 enabled = false
 
 [session]
+command = "start-hyprland"
 sessions_dirs = ["/usr/share/wayland-sessions", "/usr/share/xsessions"]
 xsessions_dirs = []
 environments = []
