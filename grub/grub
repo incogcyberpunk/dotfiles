@@ -61,3 +61,7 @@ GRUB_THEME='/usr/share/grub/themes/catppuccin-mocha-grub-theme/theme.txt'
 # functionality install os-prober and uncomment to detect and include other
 # operating systems.
 #GRUB_DISABLE_OS_PROBER=false
+
+# Don't generate "(EFI BootNext)" menu entries for every UEFI firmware boot
+# entry (added by /etc/grub.d/31_efi_bootnext).
+GRUB_DISABLE_BOOTNEXT=true
