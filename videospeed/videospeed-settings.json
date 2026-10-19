@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "lastSpeed": null,
+  "enabled": true,
+  "rememberSpeed": false,
+  "exclusiveKeys": false,
+  "audioBoolean": true,
+  "startHidden": false,
+  "controllerOpacity": 0.6,
+  "controllerButtonSize": 12,
+  "customCSS": "",
+  "keyBindings": [
+    {
+      "action": "slower",
+      "code": "KeyS",
+      "displayKey": "s",
+      "key": 83,
+      "keyCode": 83,
+      "predefined": true,
+      "value": 0.25
+    },
+    {
+      "action": "faster",
+      "code": "KeyD",
+      "displayKey": "d",
+      "key": 68,
+      "keyCode": 68,
+      "predefined": true,
+      "value": 0.25
+    },
+    {
+      "action": "rewind",
+      "code": "KeyZ",
+      "displayKey": "z",
+      "key": 90,
+      "keyCode": 90,
+      "predefined": true,
+      "value": 10
+    },
+    {
+      "action": "advance",
+      "code": "KeyX",
+      "displayKey": "x",
+      "key": 88,
+      "keyCode": 88,
+      "predefined": true,
+      "value": 10
+    },
+    {
+      "action": "reset",
+      "code": "KeyR",
+      "displayKey": "r",
+      "key": 82,
+      "keyCode": 82,
+      "predefined": true,
+      "value": 1
+    },
+    {
+      "action": "fast",
+      "code": "KeyG",
+      "displayKey": "g",
+      "key": 71,
+      "keyCode": 71,
+      "predefined": true,
+      "value": 1.8
+    },
+    {
+      "action": "display",
+      "code": "Period",
+      "displayKey": ".",
+      "key": 190,
+      "keyCode": 190,
+      "predefined": true,
+      "value": 0
+    },
+    {
+      "action": "mark",
+      "code": "KeyM",
+      "displayKey": "m",
+      "key": 77,
+      "keyCode": 77,
+      "predefined": true,
+      "value": 0
+    },
+    {
+      "action": "jump",
+      "code": "KeyJ",
+      "displayKey": "j",
+      "key": 74,
+      "keyCode": 74,
+      "predefined": true,
+      "value": 0
+    }
+  ],
+  "siteRules": [
+    {
+      "enabled": false,
+      "pattern": "imgur.com",
+      "speed": null
+    },
+    {
+      "enabled": false,
+      "pattern": "teams.microsoft.com",
+      "speed": null
+    },
+    {
+      "enabled": false,
+      "pattern": "meet.google.com",
+      "speed": null
+    }
+  ],
+  "blacklist": "imgur.com\nteams.microsoft.com\nmeet.google.com",
+  "defaultLogLevel": 4,
+  "logLevel": 3,
+  "siteDefaultSpeed": null
+}
