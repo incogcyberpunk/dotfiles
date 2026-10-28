@@ -79,3 +79,8 @@ alias wifiqr="nmcli device wifi show-password"
 function kiro(){
     command kiro-cli $@
 }
+
+# Function for easier repo cloning
+function gc() {
+    command git clone "${3:-incog}:$1" ${2:+"$2"}
+}
