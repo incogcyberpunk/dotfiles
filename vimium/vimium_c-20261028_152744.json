@@ -1,0 +1,54 @@
+{
+	"name": "Vimium C",
+	"@time": "10/28/2026, 3:27:44 PM",
+	"time": 1793180564033,
+	"environment": {
+		"extension": "2.12.3",
+		"platform": "linux",
+		"firefox": 158
+	},
+	"exclusionRules": [
+		{
+			"passKeys": "* ",
+			"pattern": "^https?://canva\\.com/"
+		}
+	],
+	"keyLayout": 2,
+	"keyMappings": [
+		"#!no-check",
+		"# Remove the mappings you don't want",
+		"unmap d",
+		"unmap u",
+		"unmap r",
+		"unmap t",
+		"unmap p",
+		"",
+		"# Full-page scrolling",
+		"map <c-d> scrollFullPageDown",
+		"map <c-u> scrollFullPageUp",
+		"",
+		"# Pass the next key to the webpage",
+		"map e passNextKey",
+		"",
+		"# Search and switch tabs",
+		"map t Vomnibar.activateTabSelection",
+		"",
+		"# Disable number-key shortcuts",
+		"unmap 1",
+		"unmap 2",
+		"unmap 3",
+		"unmap 4",
+		"unmap 5",
+		"unmap 6",
+		"unmap 7",
+		"unmap 8",
+		"unmap 9",
+		"unmap 0",
+		"",
+		"# Enter insert mode with {",
+		"unmap v",
+		"map { enterInsertMode",
+		""
+	],
+	"vimSync": true
+}
