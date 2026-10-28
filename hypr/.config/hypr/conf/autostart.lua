@@ -41,7 +41,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("ghostty --class=dev.incog.tmux -e tmux a -t Configs")
 
 	-- Load the nepali date
-	hl.exec_cmd("~/github/nepaliPatro/patro --notify")
+	hl.exec_cmd("~/nepaliPatro/patro --notify")
 
 	-- Start dynamic cursors plugin
 	hl.exec_cmd("hyprpm reload ")
