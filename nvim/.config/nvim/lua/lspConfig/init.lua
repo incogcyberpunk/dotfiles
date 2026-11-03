@@ -16,6 +16,7 @@ vim.lsp.enable {
   'gopls',
   'marksman',
   'systemd_lsp',
+  'qmlls',
 }
 
 -- Adding .git as a guaranteed fallback root marker, for all servers
