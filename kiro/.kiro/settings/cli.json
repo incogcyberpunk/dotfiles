@@ -1,0 +1,15 @@
+{
+  "chat.agentEngine": "v3",
+  "chat.modelPicker.lastUsed": {
+    "claude-opus-5.5": 1793018729424
+  },
+  "chat.defaultModel": "claude-opus-5.5",
+  "chat.modelDefaults": {
+    "claude-opus-5.5": {
+      "output_config": {
+        "effort": "xhigh"
+      }
+    }
+  },
+  "chat.sessionDashboard.indexResponses": true
+}

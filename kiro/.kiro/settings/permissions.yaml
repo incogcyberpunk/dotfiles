@@ -1,0 +1,28 @@
+rules:
+  - capability: fs_read
+    effect: allow
+    exclude: ["**/.env", "**/.env.*", "**/*.pem"]
+
+  - capability: web_fetch
+    effect: allow
+
+  - capability: web_search
+    effect: allow
+
+  - capability: subagent
+    effect: allow
+
+  - capability: shell
+    match:
+      - "rm -rf *"
+      - "ssh *"
+    effect: ask
+
+  - capability: shell
+    match:
+      - "ls *"
+      - "echo *"
+      - "printf *"
+      - "cd *"
+      - "adb *"
+    effect: allow
