@@ -84,3 +84,9 @@ function kiro(){
 function gc() {
     command git clone "${3:-incog}:$1" ${2:+"$2"}
 }
+
+# YouTube Music: play top song result (usage: ytm <song name>)
+function ytm() {
+    yt-dlp -q -f bestaudio --playlist-items 1 -o - \
+        "https://music.youtube.com/search?q=${(j:+:)@}#songs" | mpv --no-video -
+}
